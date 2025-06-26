@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = React.memo(({ className }) => {
           />
         </Styled.HeaderRight>
         <Styled.MobileMenuButton onClick={handleToggleMobileMenu}>
-          <Styled.BurgerIcon isOpen={isMobileMenuOpen} />
+          <Styled.BurgerIcon $isOpen={isMobileMenuOpen} />
         </Styled.MobileMenuButton>
       </Styled.HeaderContainer>
 

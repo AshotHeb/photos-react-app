@@ -113,7 +113,7 @@ export const MobileMenuButton = styled.button`
   }
 `
 
-export const BurgerIcon = styled.div<{ isOpen: boolean }>`
+export const BurgerIcon = styled.div<{ $isOpen: boolean }>`
   width: 24px;
   height: 2px;
   background: #1f2937;
@@ -132,18 +132,18 @@ export const BurgerIcon = styled.div<{ isOpen: boolean }>`
 
   &::before {
     top: -8px;
-    transform: ${({ isOpen }) =>
-      isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'};
+    transform: ${({ $isOpen }) =>
+      $isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'};
   }
 
   &::after {
     bottom: -8px;
-    transform: ${({ isOpen }) =>
-      isOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none'};
+    transform: ${({ $isOpen }) =>
+      $isOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none'};
   }
 
-  ${({ isOpen }) =>
-    isOpen &&
+  ${({ $isOpen }) =>
+    $isOpen &&
     `
     background: transparent;
   `}

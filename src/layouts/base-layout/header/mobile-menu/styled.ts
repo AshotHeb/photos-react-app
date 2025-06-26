@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const MobileMenuOverlay = styled.div<{ isOpen: boolean }>`
+export const MobileMenuOverlay = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -9,12 +9,12 @@ export const MobileMenuOverlay = styled.div<{ isOpen: boolean }>`
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   transition: all 0.3s ease;
 `
 
-export const MobileMenuContainer = styled.div<{ isOpen: boolean }>`
+export const MobileMenuContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -22,7 +22,8 @@ export const MobileMenuContainer = styled.div<{ isOpen: boolean }>`
   height: 100vh;
   background: white;
   box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
-  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
+  transform: ${({ $isOpen }) =>
+    $isOpen ? 'translateX(0)' : 'translateX(100%)'};
   transition: transform 0.3s ease;
   z-index: 1001;
   padding: 24px;

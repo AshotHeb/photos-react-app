@@ -11,10 +11,10 @@ export const MobileMenu: React.FC<MobileMenuProps> = React.memo(
     return (
       <>
         <Styled.MobileMenuOverlay
-          isOpen={isOpen}
+          $isOpen={isOpen}
           onClick={handleOverlayClick}
         />
-        <Styled.MobileMenuContainer isOpen={isOpen}>
+        <Styled.MobileMenuContainer $isOpen={isOpen}>
           <Styled.MobileMenuHeader>
             <Styled.MobileMenuTitle>Menu</Styled.MobileMenuTitle>
             <Styled.CloseButton onClick={onClose}>✕</Styled.CloseButton>
