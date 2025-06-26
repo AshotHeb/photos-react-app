@@ -1,9 +1,10 @@
 import { BaseLayout } from '@layouts/base-layout'
+import { AboutSection } from './about'
 
 export const Home = () => {
   return (
     <BaseLayout>
-      <div>Home</div>
+      <AboutSection />
     </BaseLayout>
   )
 }
