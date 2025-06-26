@@ -2,6 +2,7 @@ import React from 'react'
 import * as Styled from './styled'
 import { useMobileMenu } from './hook'
 import type { MobileMenuProps } from './types'
+import { MENU_ROUTES } from '@/pages/routes'
 
 export const MobileMenu: React.FC<MobileMenuProps> = React.memo(
   ({ isOpen, onClose }) => {
@@ -19,10 +20,11 @@ export const MobileMenu: React.FC<MobileMenuProps> = React.memo(
             <Styled.CloseButton onClick={onClose}>✕</Styled.CloseButton>
           </Styled.MobileMenuHeader>
           <Styled.MobileNav>
-            <Styled.MobileNavLink href="/" className="active">
-              Home
-            </Styled.MobileNavLink>
-            <Styled.MobileNavLink href="/photos">Photos</Styled.MobileNavLink>
+            {MENU_ROUTES.map((route) => (
+              <Styled.MobileNavLink key={route.path} to={route.path}>
+                {route.name}
+              </Styled.MobileNavLink>
+            ))}
           </Styled.MobileNav>
         </Styled.MobileMenuContainer>
       </>

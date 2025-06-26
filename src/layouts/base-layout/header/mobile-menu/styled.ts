@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const MobileMenuOverlay = styled.div<{ isOpen: boolean }>`
@@ -62,7 +63,7 @@ export const MobileNav = styled.nav`
   gap: 8px;
 `
 
-export const MobileNavLink = styled.a`
+export const MobileNavLink = styled(Link)`
   color: #6b7280;
   text-decoration: none;
   font-weight: 500;
