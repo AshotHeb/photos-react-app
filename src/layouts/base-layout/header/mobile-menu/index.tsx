@@ -1,26 +1,18 @@
-import React, { useEffect, useCallback } from 'react'
+import React from 'react'
 import * as Styled from './styled'
+import { useMobileMenu } from './hook'
 import type { MobileMenuProps } from './types'
 
 export const MobileMenu: React.FC<MobileMenuProps> = React.memo(
   ({ isOpen, onClose }) => {
-    const resetBodyOverflow = useCallback(() => {
-      document.body.style.overflow = 'unset'
-    }, [])
-
-    useEffect(() => {
-      if (isOpen) {
-        document.body.style.overflow = 'hidden'
-      } else {
-        document.body.style.overflow = 'unset'
-      }
-
-      return resetBodyOverflow
-    }, [isOpen, resetBodyOverflow])
+    const { handleOverlayClick } = useMobileMenu({ isOpen, onClose })
 
     return (
       <>
-        <Styled.MobileMenuOverlay isOpen={isOpen} onClick={onClose} />
+        <Styled.MobileMenuOverlay
+          isOpen={isOpen}
+          onClick={handleOverlayClick}
+        />
         <Styled.MobileMenuContainer isOpen={isOpen}>
           <Styled.MobileMenuHeader>
             <Styled.MobileMenuTitle>Menu</Styled.MobileMenuTitle>
