@@ -59,19 +59,75 @@ export const ErrorContainer = styled.div`
   }
 `
 
-export const PhotosGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+export const MasonryGrid = styled.div`
+  column-count: 4;
+  column-gap: 1rem;
   padding: 1rem 0;
   width: 100%;
 
+  @media (max-width: 1200px) {
+    column-count: 3;
+  }
+
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+    column-count: 2;
+    column-gap: 0.75rem;
   }
 
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+    column-count: 1;
+    column-gap: 0.5rem;
+  }
+`
+
+export const MasonryItem = styled.div`
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 70%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+`
+
+export const PhotoImage = styled.img<{ $aspectRatio: number }>`
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  aspect-ratio: ${({ $aspectRatio }) => $aspectRatio};
+
+  ${MasonryItem}:hover & {
+    transform: scale(1.05);
   }
 `

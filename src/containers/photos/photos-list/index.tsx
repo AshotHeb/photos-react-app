@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   usePhotoPhotos,
   usePhotoLoading,
@@ -18,6 +18,19 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
     fetchPhotos()
   }, [fetchPhotos])
 
+  const photoItems = useMemo(
+    () =>
+      photos.map((photo) => ({
+        id: photo.id,
+        src: photo.src.medium,
+        alt: photo.alt,
+        width: photo.width,
+        height: photo.height,
+        aspectRatio: photo.height / photo.width
+      })),
+    [photos]
+  )
+
   if (loading) {
     return (
       <Styled.LoadingContainer>
@@ -36,12 +49,17 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
   }
 
   return (
-    <Styled.PhotosGrid>
-      {photos.map((photo) => (
-        <div key={photo.id}>
-          <img src={photo.src.medium} alt={photo.alt} />
-        </div>
+    <Styled.MasonryGrid>
+      {photoItems.map((photo) => (
+        <Styled.MasonryItem key={photo.id}>
+          <Styled.PhotoImage
+            src={photo.src}
+            alt={photo.alt}
+            loading="lazy"
+            $aspectRatio={photo.aspectRatio}
+          />
+        </Styled.MasonryItem>
       ))}
-    </Styled.PhotosGrid>
+    </Styled.MasonryGrid>
   )
 })
