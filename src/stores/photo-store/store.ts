@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import type { Photo, Store, PhotoResponse } from './types'
+import { pexelsApi } from '@/api/services/pexels'
 
 interface PhotoState {
   photos: Photo[]
@@ -65,15 +66,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
       setSearchQuery: (query: string) => set({ searchQuery: query }),
       clearSearch: () => set({ searchQuery: '', currentPage: 1 }),
 
-      // Photo interaction actions
-      togglePhotoLike: (photoId: number) => {
-        const { photos } = get()
-        const updatedPhotos = photos.map((photo) =>
-          photo.id === photoId ? { ...photo, liked: !photo.liked } : photo
-        )
-        set({ photos: updatedPhotos })
-      },
-
       // API response handling
       setPhotoResponse: (response: PhotoResponse) => {
         const { photos: existingPhotos, currentPage } = get()
@@ -103,6 +95,40 @@ export const usePhotoStore = create<Store<PhotoState>>()(
         const { photos } = get()
         const filteredPhotos = photos.filter((photo) => photo.id !== photoId)
         set({ photos: filteredPhotos })
+      },
+
+      // API actions
+      fetchPhotos: async (params: { page?: number; perPage?: number } = {}) => {
+        const {
+          setLoading,
+          setError,
+          setPhotos,
+          setCurrentPage,
+          setTotalResults,
+          setHasMore
+        } = get()
+        const { page = 1, perPage = 50 } = params
+
+        try {
+          setLoading(true)
+          setError(null)
+
+          const response = await pexelsApi.getCuratedPhotos({
+            page,
+            perPage
+          })
+
+          setPhotos(response.photos)
+          setCurrentPage(response.page)
+          setTotalResults(response.total_results)
+          setHasMore(!!response.next_page)
+        } catch (error) {
+          setError(
+            error instanceof Error ? error.message : 'Failed to fetch photos'
+          )
+        } finally {
+          setLoading(false)
+        }
       }
     }),
     {

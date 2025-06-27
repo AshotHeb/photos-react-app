@@ -67,7 +67,6 @@ export interface PhotoActions {
   addPhotos: (newPhotos: Photo[]) => void
   clearPhotos: () => void
   setSelectedPhoto: (photo: Photo | null) => void
-  togglePhotoLike: (photoId: number) => void
   updatePhoto: (photoId: number, updates: Partial<Photo>) => void
   removePhoto: (photoId: number) => void
 
@@ -83,6 +82,9 @@ export interface PhotoActions {
 
   // API response actions
   setPhotoResponse: (response: PhotoResponse) => void
+
+  // API actions
+  fetchPhotos: (params?: { page?: number; perPage?: number }) => Promise<void>
 }
 
 export type Store<T> = T & BaseState & BaseActions & PhotoActions

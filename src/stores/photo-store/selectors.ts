@@ -50,8 +50,6 @@ export const usePhotoClearPhotos = () =>
   usePhotoStoreBase((state) => state.clearPhotos)
 export const usePhotoSetSelected = () =>
   usePhotoStoreBase((state) => state.setSelectedPhoto)
-export const usePhotoToggleLike = () =>
-  usePhotoStoreBase((state) => state.togglePhotoLike)
 export const usePhotoUpdate = () =>
   usePhotoStoreBase((state) => state.updatePhoto)
 export const usePhotoRemove = () =>
@@ -74,13 +72,15 @@ export const usePhotoClearSearch = () =>
 export const usePhotoSetResponse = () =>
   usePhotoStoreBase((state) => state.setPhotoResponse)
 
+export const usePhotoFetchPhotos = () =>
+  usePhotoStoreBase((state) => state.fetchPhotos)
+
 export const usePhotoDataActions = () =>
   usePhotoStoreBase((state) => ({
     setPhotos: state.setPhotos,
     addPhotos: state.addPhotos,
     clearPhotos: state.clearPhotos,
     setSelectedPhoto: state.setSelectedPhoto,
-    togglePhotoLike: state.togglePhotoLike,
     updatePhoto: state.updatePhoto,
     removePhoto: state.removePhoto
   }))
