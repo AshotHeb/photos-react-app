@@ -1,5 +1,6 @@
 import type { MainProps } from './types'
+import * as Styled from './styled'
 
 export const Main = ({ children }: MainProps) => {
-  return <main>{children}</main>
+  return <Styled.Main>{children}</Styled.Main>
 }
