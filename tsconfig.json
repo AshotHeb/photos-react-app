@@ -12,7 +12,8 @@
       "@pages": ["src/pages"],
 
       "@containers/*": ["src/containers/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@api/*": ["src/api/*"]
     }
   }
 }
