@@ -6,6 +6,7 @@ import {
   usePhotoFetchPhotos
 } from '@/stores/photo-store'
 import { LoadMore } from './load-more'
+import { PhotoItem } from './photo-item'
 import * as Styled from './styled'
 import type { PhotosListProps } from './types'
 
@@ -61,14 +62,13 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
     <>
       <Styled.MasonryGrid>
         {photoItems.map((photo) => (
-          <Styled.MasonryItem key={`photo-${photo.id}`}>
-            <Styled.PhotoImage
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              $aspectRatio={photo.aspectRatio}
-            />
-          </Styled.MasonryItem>
+          <PhotoItem
+            key={`photo-${photo.id}`}
+            id={photo.id}
+            src={photo.src}
+            alt={photo.alt}
+            aspectRatio={photo.aspectRatio}
+          />
         ))}
       </Styled.MasonryGrid>
 
