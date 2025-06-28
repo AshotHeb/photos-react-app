@@ -7,7 +7,7 @@ export const useLoadMore = () => {
   const observerRef = useRef<HTMLDivElement>(null)
 
   const loadMore = useCallback(async () => {
-    await fetchPhotos({ loadMore: true, perPage: 20 })
+    await fetchPhotos({ loadMore: true })
   }, [fetchPhotos])
 
   // Intersection Observer for infinite scroll

@@ -12,6 +12,7 @@ interface PhotoState {
   totalResults: number
 
   searchQuery: string
+  perPage: number
 }
 
 export const usePhotoStore = create<Store<PhotoState>>()(
@@ -26,6 +27,7 @@ export const usePhotoStore = create<Store<PhotoState>>()(
       hasMore: false,
       totalResults: 0,
       searchQuery: '',
+      perPage: 20,
 
       // Base actions
       setLoading: (loading) => set({ loading }),
@@ -40,7 +42,8 @@ export const usePhotoStore = create<Store<PhotoState>>()(
           currentPage: 1,
           hasMore: false,
           totalResults: 0,
-          searchQuery: ''
+          searchQuery: '',
+          perPage: 20
         }),
 
       // Photo actions
@@ -126,11 +129,14 @@ export const usePhotoStore = create<Store<PhotoState>>()(
       },
 
       // API actions
-      fetchPhotos: async (
-        params: { perPage?: number; loadMore?: boolean } = {}
-      ) => {
-        const { _fetchPhotosFromApi, _validateLoadMore, setCurrentPage } = get()
-        const { perPage = 20, loadMore = false } = params
+      fetchPhotos: async (params: { loadMore?: boolean } = {}) => {
+        const {
+          _fetchPhotosFromApi,
+          _validateLoadMore,
+          setCurrentPage,
+          perPage
+        } = get()
+        const { loadMore = false } = params
 
         // Handle load more scenario
         if (loadMore) {

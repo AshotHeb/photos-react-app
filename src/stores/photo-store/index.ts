@@ -9,6 +9,7 @@ export {
   usePhotoHasMore,
   usePhotoTotalResults,
   usePhotoSearchQuery,
+  usePhotoPerPage,
   usePhotoPagination,
   usePhotoSearch,
   usePhotoStoreActions,

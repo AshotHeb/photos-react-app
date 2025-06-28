@@ -12,6 +12,7 @@ export const usePhotoTotalResults = () =>
   usePhotoStoreBase((state) => state.totalResults)
 export const usePhotoSearchQuery = () =>
   usePhotoStoreBase((state) => state.searchQuery)
+export const usePhotoPerPage = () => usePhotoStoreBase((state) => state.perPage)
 
 export const usePhotoPagination = () =>
   usePhotoStoreBase((state) => ({
