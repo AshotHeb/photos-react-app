@@ -99,15 +99,8 @@ export const usePhotoStore = create<Store<PhotoState>>()(
 
       // API actions
       fetchPhotos: async (params: { page?: number; perPage?: number } = {}) => {
-        const {
-          setLoading,
-          setError,
-          setPhotos,
-          setCurrentPage,
-          setTotalResults,
-          setHasMore
-        } = get()
-        const { page = 1, perPage = 50 } = params
+        const { setLoading, setError, setPhotoResponse } = get()
+        const { page = 1, perPage = 20 } = params
 
         try {
           setLoading(true)
@@ -118,10 +111,7 @@ export const usePhotoStore = create<Store<PhotoState>>()(
             perPage
           })
 
-          setPhotos(response.photos)
-          setCurrentPage(response.page)
-          setTotalResults(response.total_results)
-          setHasMore(!!response.next_page)
+          setPhotoResponse(response)
         } catch (error) {
           setError(
             error instanceof Error ? error.message : 'Failed to fetch photos'

@@ -81,6 +81,7 @@ export const MasonryGrid = styled.div`
 `
 
 export const MasonryItem = styled.div`
+  position: relative;
   break-inside: avoid;
   margin-bottom: 1rem;
   border-radius: 8px;
@@ -88,7 +89,6 @@ export const MasonryItem = styled.div`
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  position: relative;
   cursor: pointer;
 
   &:hover {
