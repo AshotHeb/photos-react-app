@@ -84,7 +84,18 @@ export interface PhotoActions {
   setPhotoResponse: (response: PhotoResponse) => void
 
   // API actions
-  fetchPhotos: (params?: { page?: number; perPage?: number }) => Promise<void>
+  fetchPhotos: (params?: {
+    perPage?: number
+    loadMore?: boolean
+  }) => Promise<void>
+
+  // Helper functions (internal)
+  _fetchPhotosFromApi: (
+    page: number,
+    perPage: number,
+    errorMessage: string
+  ) => Promise<void>
+  _validateLoadMore: () => boolean
 }
 
 export type Store<T> = T & BaseState & BaseActions & PhotoActions

@@ -1,34 +1,22 @@
 import { useCallback, useRef, useEffect } from 'react'
-import {
-  usePhotoHasMore,
-  usePhotoLoading,
-  usePhotoCurrentPage,
-  usePhotoIncrementPage,
-  usePhotoFetchPhotos
-} from '@/stores/photo-store'
+import { usePhotoFetchPhotos } from '@/stores/photo-store'
 
 export const useLoadMore = () => {
-  const hasMore = usePhotoHasMore()
-  const loading = usePhotoLoading()
-  const currentPage = usePhotoCurrentPage()
-  const incrementPage = usePhotoIncrementPage()
   const fetchPhotos = usePhotoFetchPhotos()
 
   const observerRef = useRef<HTMLDivElement>(null)
 
   const loadMore = useCallback(async () => {
-    if (!hasMore || loading) return
-
-    incrementPage()
-    await fetchPhotos({ page: currentPage + 1, perPage: 20 })
-  }, [hasMore, loading, incrementPage, fetchPhotos, currentPage])
+    await fetchPhotos({ loadMore: true, perPage: 20 })
+  }, [fetchPhotos])
 
   // Intersection Observer for infinite scroll
   useEffect(() => {
+    const currentRef = observerRef.current
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries
-        if (entry.isIntersecting && hasMore && !loading) {
+        if (entry.isIntersecting) {
           loadMore()
         }
       },
@@ -39,20 +27,18 @@ export const useLoadMore = () => {
       }
     )
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current)
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current)
+      if (currentRef) {
+        observer.unobserve(currentRef)
       }
     }
-  }, [hasMore, loading, loadMore])
+  }, [loadMore])
 
   return {
-    observerRef,
-    hasMore,
-    loading
+    observerRef
   }
 }

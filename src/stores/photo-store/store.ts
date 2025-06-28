@@ -76,7 +76,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
 
         set({
           photos: newPhotos,
-          currentPage: response.page,
           totalResults: response.total_results,
           hasMore: !!response.next_page
         })
@@ -97,10 +96,12 @@ export const usePhotoStore = create<Store<PhotoState>>()(
         set({ photos: filteredPhotos })
       },
 
-      // API actions
-      fetchPhotos: async (params: { page?: number; perPage?: number } = {}) => {
+      _fetchPhotosFromApi: async (
+        page: number,
+        perPage: number,
+        errorMessage: string
+      ) => {
         const { setLoading, setError, setPhotoResponse } = get()
-        const { page = 1, perPage = 20 } = params
 
         try {
           setLoading(true)
@@ -113,12 +114,41 @@ export const usePhotoStore = create<Store<PhotoState>>()(
 
           setPhotoResponse(response)
         } catch (error) {
-          setError(
-            error instanceof Error ? error.message : 'Failed to fetch photos'
-          )
+          setError(error instanceof Error ? error.message : errorMessage)
         } finally {
           setLoading(false)
         }
+      },
+
+      _validateLoadMore: () => {
+        const { hasMore, loading } = get()
+        return hasMore && !loading
+      },
+
+      // API actions
+      fetchPhotos: async (
+        params: { perPage?: number; loadMore?: boolean } = {}
+      ) => {
+        const { _fetchPhotosFromApi, _validateLoadMore, setCurrentPage } = get()
+        const { perPage = 20, loadMore = false } = params
+
+        // Handle load more scenario
+        if (loadMore) {
+          if (!_validateLoadMore()) return
+
+          const { currentPage } = get()
+          const nextPage = currentPage + 1
+
+          setCurrentPage(nextPage)
+          await _fetchPhotosFromApi(
+            nextPage,
+            perPage,
+            'Failed to load more photos'
+          )
+          return
+        }
+
+        await _fetchPhotosFromApi(1, perPage, 'Failed to fetch photos')
       }
     }),
     {

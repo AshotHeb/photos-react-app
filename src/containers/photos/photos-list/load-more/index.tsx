@@ -1,9 +1,12 @@
 import React from 'react'
 import { useLoadMore } from './hooks'
 import * as Styled from './styled'
+import { usePhotoHasMore } from '@/stores'
 
 export const LoadMore: React.FC = React.memo(() => {
-  const { observerRef, hasMore } = useLoadMore()
+  const { observerRef } = useLoadMore()
+
+  const hasMore = usePhotoHasMore()
 
   if (!hasMore) {
     return (
