@@ -21,7 +21,11 @@ export const MobileMenu: React.FC<MobileMenuProps> = React.memo(
           </Styled.MobileMenuHeader>
           <Styled.MobileNav>
             {MENU_ROUTES.map((route) => (
-              <Styled.MobileNavLink key={route.path} to={route.path}>
+              <Styled.MobileNavLink
+                key={route.path}
+                to={route.path}
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
                 {route.name}
               </Styled.MobileNavLink>
             ))}
