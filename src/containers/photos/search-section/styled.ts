@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const SearchSection = styled.section`
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 100;
   background: rgba(255, 255, 255, 0.98);

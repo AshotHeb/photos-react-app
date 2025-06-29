@@ -6,6 +6,7 @@ import {
 } from '@/stores/photo-store'
 import { LoadMore } from './load-more'
 import { PhotoItem } from './photo-item'
+import { ScrollToTop } from './scroll-to-top'
 import { useMasonryLayout } from './hooks'
 import * as Styled from './styled'
 import type { PhotosListProps } from './types'
@@ -75,6 +76,9 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
       </Styled.MasonryContainer>
 
       <LoadMore isLoading={isCalculating || loading} />
+
+      {/* Scroll to top button */}
+      <ScrollToTop threshold={500} smooth={true} />
     </>
   )
 })
