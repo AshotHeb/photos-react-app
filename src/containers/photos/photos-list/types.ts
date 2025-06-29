@@ -29,3 +29,7 @@ export interface MasonryLayout {
   width: number
   photo: MasonryPhoto
 }
+
+export interface PhotoSetMap {
+  [key: string]: MasonryLayout[]
+}

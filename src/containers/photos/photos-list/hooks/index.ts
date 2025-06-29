@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import type { MasonryLayout } from '../types'
+import type { PhotoSetMap } from '../types'
 import type {
   UseMasonryLayoutProps,
   UseMasonryLayoutReturn,
@@ -33,14 +33,14 @@ export const useMasonryLayout = ({
   const photos = usePhotoPhotos()
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState(0)
-  const [layouts, setLayouts] = useState<MasonryLayout[]>([])
+  const [layouts, setLayouts] = useState<PhotoSetMap>({})
   const [totalHeight, setTotalHeight] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
 
   // Track previous state for optimization
   const previousPhotosRef = useRef<Photo[]>([])
   const previousContainerWidthRef = useRef(0)
-  const previousLayoutsRef = useRef<MasonryLayout[]>([])
+  const previousLayoutsRef = useRef<PhotoSetMap>({})
 
   // Debounce width updates
   const debouncedWidth = useDebounce(containerWidth, debounceDelay)
@@ -119,7 +119,7 @@ export const useMasonryLayout = ({
   }, [])
 
   return {
-    layouts,
+    layouts: Object.values(layouts).flat(),
     totalHeight,
     containerRef,
     containerWidth: debouncedWidth,

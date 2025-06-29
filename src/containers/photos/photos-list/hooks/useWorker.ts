@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react'
-import type { MasonryLayout } from '../types'
+import type { PhotoSetMap } from '../types'
 import type { Photo } from './types'
 import { runWhenIdle, calculateMasonryLayout } from './utils'
 
@@ -11,7 +11,7 @@ export const useWorker = () => {
       photos: Photo[]
       containerWidth: number
       gap: number
-      existingLayouts: MasonryLayout[]
+      existingLayouts: PhotoSetMap
       previousPhotos: Photo[]
       previousWidth: number
     }) => {
@@ -23,7 +23,7 @@ export const useWorker = () => {
           )
         }
 
-        return new Promise<{ layouts: MasonryLayout[]; totalHeight: number }>(
+        return new Promise<{ layouts: PhotoSetMap; totalHeight: number }>(
           (resolve, reject) => {
             const worker = workerRef.current!
 

@@ -1,4 +1,4 @@
-import type { MasonryLayout } from '../types'
+import type { MasonryLayout, PhotoSetMap } from '../types'
 import type { Photo } from './types'
 
 // Breakpoint constants
@@ -87,17 +87,17 @@ export const calculateMasonryLayout = (
   photos: Photo[],
   containerWidth: number,
   gap: number,
-  existingLayouts: MasonryLayout[] = [],
+  existingLayouts: PhotoSetMap = {},
   previousPhotos: Photo[] = [],
   previousWidth: number = 0
-): { layouts: MasonryLayout[]; totalHeight: number } => {
+): { layouts: PhotoSetMap; totalHeight: number } => {
   if (photos.length === 0 || containerWidth === 0) {
-    return { layouts: [], totalHeight: 0 }
+    return { layouts: {}, totalHeight: 0 }
   }
 
   const columns = getColumnCount(containerWidth)
   const itemWidth = (containerWidth - (columns - 1) * gap) / columns
-  const layouts: MasonryLayout[] = []
+  let layouts: PhotoSetMap = {}
   let columnHeights = new Array(columns).fill(0)
 
   // Check if we can reuse existing layouts
@@ -109,19 +109,21 @@ export const calculateMasonryLayout = (
   )
 
   // Use existing layouts if possible
-  if (canReuse && existingLayouts.length > 0) {
-    layouts.push(...existingLayouts)
-
-    existingLayouts.forEach((layout) => {
-      columnHeights[layout.column] = Math.max(
-        columnHeights[layout.column],
-        layout.top + layout.height + gap
-      )
+  if (canReuse && Object.keys(existingLayouts).length > 0) {
+    layouts = { ...existingLayouts }
+    Object.values(existingLayouts).forEach((layout) => {
+      layout.forEach((layout) => {
+        columnHeights[layout.column] = Math.max(
+          columnHeights[layout.column],
+          layout.top + layout.height + gap
+        )
+      })
     })
   }
 
   // Calculate positions for photos (either all or just new ones)
-  const startIndex = canReuse ? existingLayouts.length : 0
+  const existingLayoutsLength = Object.values(existingLayouts).length * gap
+  const startIndex = canReuse ? existingLayoutsLength : 0
 
   for (let i = startIndex; i < photos.length; i++) {
     const { layout, columnHeights: newColumnHeights } = calculatePhotoLayout(
@@ -132,7 +134,13 @@ export const calculateMasonryLayout = (
       gap,
       columnHeights
     )
-    layouts.push(layout)
+    // create new set of 20 photos
+    const setIndex = Math.floor(i / gap)
+    const setKey = `set-${setIndex}`
+
+    const resultLayouts = layouts[setKey] || []
+    layouts[setKey] = [...resultLayouts, layout]
+
     columnHeights = newColumnHeights
   }
 
