@@ -63,6 +63,7 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
             return (
               <PhotoItem
                 key={`photo-${layout.id}`}
+                id={layout.id}
                 src={layout.photo.src}
                 alt={layout.photo.alt}
                 aspectRatio={layout.photo.aspectRatio}

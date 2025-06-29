@@ -6,6 +6,9 @@ import { pexelsApi } from '@/api/services/pexels'
 interface PhotoState {
   photos: Photo[]
   selectedPhoto: Photo | null
+  singlePhoto: Photo | null
+  singlePhotoLoading: boolean
+  singlePhotoError: string | null
 
   currentPage: number
   hasMore: boolean
@@ -23,6 +26,9 @@ export const usePhotoStore = create<Store<PhotoState>>()(
 
       photos: [],
       selectedPhoto: null,
+      singlePhoto: null,
+      singlePhotoLoading: false,
+      singlePhotoError: null,
       currentPage: 1,
       hasMore: false,
       totalResults: 0,
@@ -39,6 +45,9 @@ export const usePhotoStore = create<Store<PhotoState>>()(
           error: null,
           photos: [],
           selectedPhoto: null,
+          singlePhoto: null,
+          singlePhotoLoading: false,
+          singlePhotoError: null,
           currentPage: 1,
           hasMore: false,
           totalResults: 0,
@@ -55,6 +64,29 @@ export const usePhotoStore = create<Store<PhotoState>>()(
       clearPhotos: () => set({ photos: [], currentPage: 1, hasMore: false }),
 
       setSelectedPhoto: (photo: Photo | null) => set({ selectedPhoto: photo }),
+
+      // Single photo actions
+      setSinglePhoto: (photo: Photo | null) => set({ singlePhoto: photo }),
+      setSinglePhotoLoading: (loading: boolean) =>
+        set({ singlePhotoLoading: loading }),
+      setSinglePhotoError: (error: string | null) =>
+        set({ singlePhotoError: error }),
+      fetchSinglePhoto: async (id: number) => {
+        const { setSinglePhotoLoading, setSinglePhotoError, setSinglePhoto } =
+          get()
+
+        try {
+          setSinglePhotoLoading(true)
+          setSinglePhotoError(null)
+          const photoData = await pexelsApi.getPhotoById({ id })
+          setSinglePhoto(photoData)
+        } catch (err) {
+          setSinglePhotoError('Failed to load photo. Please try again.')
+          console.error('Error fetching photo:', err)
+        } finally {
+          setSinglePhotoLoading(false)
+        }
+      },
 
       // Pagination actions
       setCurrentPage: (page: number) => set({ currentPage: page }),

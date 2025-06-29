@@ -5,6 +5,7 @@ export interface PhotosListProps {
 }
 
 export interface PhotoItemProps {
+  id: number
   src: string
   alt: string
   aspectRatio: number

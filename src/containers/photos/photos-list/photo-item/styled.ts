@@ -50,6 +50,33 @@ export const PhotoImage = styled.img<{ $aspectRatio: number }>`
   }
 `
 
+export const PhotoOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+
+  ${PhotoItemWrapper}:hover & {
+    opacity: 1;
+  }
+`
+
+export const ViewDetailsText = styled.span`
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  padding: 20px;
+`
+
 export const MasonryItem = styled.div`
   position: absolute;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

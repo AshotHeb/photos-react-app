@@ -70,6 +70,12 @@ export interface PhotoActions {
   updatePhoto: (photoId: number, updates: Partial<Photo>) => void
   removePhoto: (photoId: number) => void
 
+  // Single photo actions
+  setSinglePhoto: (photo: Photo | null) => void
+  setSinglePhotoLoading: (loading: boolean) => void
+  setSinglePhotoError: (error: string | null) => void
+  fetchSinglePhoto: (id: number) => Promise<void>
+
   // Pagination actions
   setCurrentPage: (page: number) => void
   setHasMore: (hasMore: boolean) => void
