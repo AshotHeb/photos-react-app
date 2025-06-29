@@ -3,6 +3,8 @@ import { usePhotoStore as usePhotoStoreBase } from './store'
 export const usePhotoLoading = () => usePhotoStoreBase((state) => state.loading)
 export const usePhotoError = () => usePhotoStoreBase((state) => state.error)
 export const usePhotoPhotos = () => usePhotoStoreBase((state) => state.photos)
+export const useIsPhotosEmpty = () =>
+  usePhotoStoreBase((state) => state.photos.length === 0)
 export const usePhotoSelected = () =>
   usePhotoStoreBase((state) => state.selectedPhoto)
 export const usePhotoCurrentPage = () =>

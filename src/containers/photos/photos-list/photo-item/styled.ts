@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 
-export const MasonryItem = styled.div`
+export const PhotoItemWrapper = styled.div`
   position: relative;
-  break-inside: avoid;
-  margin-bottom: 1rem;
   border-radius: 8px;
   overflow: hidden;
   background: white;
@@ -12,8 +10,9 @@ export const MasonryItem = styled.div`
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-4px) scale(1.02);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    z-index: 10;
   }
 
   &::before {
@@ -46,7 +45,7 @@ export const PhotoImage = styled.img<{ $aspectRatio: number }>`
   object-fit: cover;
   transition: transform 0.3s ease;
 
-  ${MasonryItem}:hover & {
+  ${PhotoItemWrapper}:hover & {
     transform: scale(1.05);
   }
 `

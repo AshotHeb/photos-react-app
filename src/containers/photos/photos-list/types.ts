@@ -5,8 +5,25 @@ export interface PhotosListProps {
 }
 
 export interface PhotoItemProps {
+  src: string
+  alt: string
+  aspectRatio: number
+  onClick?: () => void
+}
+
+export interface MasonryPhoto {
   id: number
   src: string
   alt: string
-  onClick?: () => void
+  aspectRatio: number
+}
+
+export interface MasonryLayout {
+  id: number
+  column: number
+  left: number
+  top: number
+  height: number
+  width: number
+  photo: MasonryPhoto
 }

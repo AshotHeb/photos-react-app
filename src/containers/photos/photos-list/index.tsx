@@ -1,21 +1,26 @@
-import React, { useCallback, useMemo, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
-  usePhotoPhotos,
   usePhotoLoading,
   usePhotoError,
   usePhotoFetchPhotos
 } from '@/stores/photo-store'
 import { LoadMore } from './load-more'
 import { PhotoItem } from './photo-item'
+import { useMasonryLayout } from './hooks'
 import * as Styled from './styled'
 import type { PhotosListProps } from './types'
+import { useIsPhotosEmpty } from '@/stores/photo-store/selectors'
 
 export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
-  const photos = usePhotoPhotos()
   const loading = usePhotoLoading()
   const error = usePhotoError()
   const fetchPhotos = usePhotoFetchPhotos()
-  const emptyPhotos = useMemo(() => photos.length === 0, [photos])
+  const emptyPhotos = useIsPhotosEmpty()
+
+  // Use masonry layout hook
+  const { layouts, totalHeight, containerRef } = useMasonryLayout({
+    gap: 20
+  })
 
   // Initial load
   useEffect(() => {
@@ -27,19 +32,6 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
   const handleRetry = useCallback(() => {
     fetchPhotos()
   }, [fetchPhotos])
-
-  const photoItems = useMemo(
-    () =>
-      photos.map((photo) => ({
-        id: photo.id,
-        src: photo.src.medium,
-        alt: photo.alt,
-        width: photo.width,
-        height: photo.height,
-        aspectRatio: photo.height / photo.width
-      })),
-    [photos]
-  )
 
   if (loading && emptyPhotos) {
     return (
@@ -60,17 +52,26 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
 
   return (
     <>
-      <Styled.MasonryGrid>
-        {photoItems.map((photo) => (
-          <PhotoItem
-            key={`photo-${photo.id}`}
-            id={photo.id}
-            src={photo.src}
-            alt={photo.alt}
-            aspectRatio={photo.aspectRatio}
-          />
-        ))}
-      </Styled.MasonryGrid>
+      <Styled.MasonryContainer ref={containerRef}>
+        <Styled.MasonryContent style={{ height: totalHeight }}>
+          {layouts.map((layout) => {
+            const transform = `translate3d(${layout.left}px, ${layout.top}px, 0)`
+
+            return (
+              <Styled.MasonryItem
+                key={`photo-${layout.id}`}
+                style={{ width: layout.width, transform }}
+              >
+                <PhotoItem
+                  src={layout.photo.src}
+                  alt={layout.photo.alt}
+                  aspectRatio={layout.photo.aspectRatio}
+                />
+              </Styled.MasonryItem>
+            )
+          })}
+        </Styled.MasonryContent>
+      </Styled.MasonryContainer>
 
       <LoadMore />
     </>

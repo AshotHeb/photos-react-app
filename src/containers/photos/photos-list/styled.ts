@@ -59,23 +59,19 @@ export const ErrorContainer = styled.div`
   }
 `
 
-export const MasonryGrid = styled.div`
-  column-count: 4;
-  column-gap: 1rem;
-  padding: 1rem 0;
+export const MasonryContainer = styled.div`
+  position: relative;
   width: 100%;
+  padding: 1rem 0;
+`
 
-  @media (max-width: 1200px) {
-    column-count: 3;
-  }
+export const MasonryContent = styled.div`
+  position: relative;
+  width: 100%;
+`
 
-  @media (max-width: 768px) {
-    column-count: 2;
-    column-gap: 0.75rem;
-  }
-
-  @media (max-width: 480px) {
-    column-count: 1;
-    column-gap: 0.5rem;
-  }
+export const MasonryItem = styled.div`
+  position: absolute;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 `

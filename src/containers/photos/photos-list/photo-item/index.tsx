@@ -1,18 +1,18 @@
 import React from 'react'
 import * as Styled from './styled'
-import type { PhotoItemProps } from './types'
+import type { PhotoItemProps } from '../types'
 
 export const PhotoItem: React.FC<PhotoItemProps> = React.memo(
-  ({ id, src, alt, aspectRatio }) => {
+  ({ src, alt, aspectRatio }) => {
     return (
-      <Styled.MasonryItem key={`photo-${id}`}>
+      <Styled.PhotoItemWrapper>
         <Styled.PhotoImage
           src={src}
           alt={alt}
           loading="lazy"
           $aspectRatio={aspectRatio}
         />
-      </Styled.MasonryItem>
+      </Styled.PhotoItemWrapper>
     )
   }
 )
