@@ -2,8 +2,9 @@ import React from 'react'
 import { useLoadMore } from './hooks'
 import * as Styled from './styled'
 import { usePhotoHasMore } from '@/stores'
+import type { LoadMoreProps } from './types'
 
-export const LoadMore: React.FC = React.memo(() => {
+export const LoadMore: React.FC<LoadMoreProps> = React.memo(({ isLoading }) => {
   const { observerRef } = useLoadMore()
 
   const hasMore = usePhotoHasMore()
@@ -17,7 +18,7 @@ export const LoadMore: React.FC = React.memo(() => {
   }
 
   return (
-    <Styled.LoadMoreTrigger ref={observerRef}>
+    <Styled.LoadMoreTrigger ref={observerRef} $isVisible={isLoading}>
       <Styled.Spinner />
     </Styled.LoadMoreTrigger>
   )

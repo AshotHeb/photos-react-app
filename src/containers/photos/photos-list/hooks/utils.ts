@@ -8,6 +8,18 @@ export const BREAKPOINTS = {
   mobile: 480
 } as const
 
+// Utility function for requestIdleCallback with fallback
+export const runWhenIdle = <T>(fn: () => T): Promise<T> => {
+  return new Promise((resolve) => {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => resolve(fn()))
+    } else {
+      // Fallback for older browsers
+      setTimeout(() => resolve(fn()), 1)
+    }
+  })
+}
+
 // Calculate responsive column count
 export const getColumnCount = (width: number): number => {
   if (width >= BREAKPOINTS.desktop) return 4

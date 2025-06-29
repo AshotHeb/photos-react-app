@@ -1,11 +1,11 @@
-import { useMemo, useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import type { MasonryLayout } from '../types'
 import type {
   UseMasonryLayoutProps,
   UseMasonryLayoutReturn,
   Photo
 } from './types'
-import { calculateMasonryLayout } from './utils'
+import { useWorker } from './useWorker'
 import isEqual from 'lodash.isequal'
 import { usePhotoPhotos } from '@/stores'
 
@@ -35,6 +35,7 @@ export const useMasonryLayout = ({
   const [containerWidth, setContainerWidth] = useState(0)
   const [layouts, setLayouts] = useState<MasonryLayout[]>([])
   const [totalHeight, setTotalHeight] = useState(0)
+  const [isCalculating, setIsCalculating] = useState(false)
 
   // Track previous state for optimization
   const previousPhotosRef = useRef<Photo[]>([])
@@ -43,50 +44,63 @@ export const useMasonryLayout = ({
 
   // Debounce width updates
   const debouncedWidth = useDebounce(containerWidth, debounceDelay)
+  const { calculateLayout } = useWorker()
 
-  // Memoized calculation function to prevent recreation
-  const calculateLayouts = useCallback(() => {
+  // Memoized calculation function using worker with fallback
+  const calculateLayouts = useCallback(async () => {
     const previousPhotos = previousPhotosRef.current
     const previousWidth = previousContainerWidthRef.current
     const previousLayouts = previousLayoutsRef.current
 
-    return calculateMasonryLayout(
+    return calculateLayout({
       photos,
-      debouncedWidth,
+      containerWidth: debouncedWidth,
       gap,
-      previousLayouts,
+      existingLayouts: previousLayouts,
       previousPhotos,
       previousWidth
-    )
-  }, [photos, debouncedWidth, gap])
+    })
+  }, [photos, debouncedWidth, gap, calculateLayout])
 
-  // Calculate layouts only when dependencies change
-  const result = useMemo(() => {
-    return calculateLayouts()
-  }, [calculateLayouts])
-
-  // Update layouts and track previous state only when result changes
+  // Handle async layout calculation
   useEffect(() => {
-    // Only update if result actually changed
-    const layoutsChanged = !isEqual(result.layouts, layouts)
-    const heightChanged = result.totalHeight !== totalHeight
+    let isMounted = true
 
-    if (layoutsChanged || heightChanged) {
-      setLayouts(result.layouts)
-      setTotalHeight(result.totalHeight)
-      previousLayoutsRef.current = result.layouts
+    const performCalculation = async () => {
+      setIsCalculating(true)
+
+      try {
+        const result = await calculateLayouts()
+
+        if (!isMounted) return
+
+        // Only update if result actually changed
+        const layoutsChanged = !isEqual(result.layouts, layouts)
+        const heightChanged = result.totalHeight !== totalHeight
+
+        if (layoutsChanged || heightChanged) {
+          setLayouts(result.layouts)
+          setTotalHeight(result.totalHeight)
+          previousLayoutsRef.current = result.layouts
+        }
+
+        previousPhotosRef.current = photos
+        previousContainerWidthRef.current = debouncedWidth
+      } catch (error) {
+        console.error('Failed to calculate layout:', error)
+      } finally {
+        if (isMounted) {
+          setIsCalculating(false)
+        }
+      }
     }
 
-    previousPhotosRef.current = photos
-    previousContainerWidthRef.current = debouncedWidth
-  }, [
-    result.layouts,
-    result.totalHeight,
-    layouts,
-    totalHeight,
-    photos,
-    debouncedWidth
-  ])
+    performCalculation()
+
+    return () => {
+      isMounted = false
+    }
+  }, [calculateLayouts, layouts, totalHeight, photos, debouncedWidth])
 
   // Handle resize events
   useEffect(() => {
@@ -108,6 +122,7 @@ export const useMasonryLayout = ({
     layouts,
     totalHeight,
     containerRef,
-    containerWidth: debouncedWidth
+    containerWidth: debouncedWidth,
+    isCalculating
   }
 }

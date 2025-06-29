@@ -20,4 +20,5 @@ export interface UseMasonryLayoutReturn {
   totalHeight: number
   containerRef: React.RefObject<HTMLDivElement | null>
   containerWidth: number
+  isCalculating: boolean
 }

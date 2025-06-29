@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const LoadMoreTrigger = styled.div`
+export const LoadMoreTrigger = styled.div<{ $isVisible: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,6 +9,7 @@ export const LoadMoreTrigger = styled.div`
   background: white;
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  opacity: ${(props) => (props.$isVisible ? 1 : 0)};
 `
 
 export const Spinner = styled.div`

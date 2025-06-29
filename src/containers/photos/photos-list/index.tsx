@@ -18,9 +18,10 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
   const emptyPhotos = useIsPhotosEmpty()
 
   // Use masonry layout hook
-  const { layouts, totalHeight, containerRef } = useMasonryLayout({
-    gap: 20
-  })
+  const { layouts, totalHeight, containerRef, isCalculating } =
+    useMasonryLayout({
+      gap: 20
+    })
 
   // Initial load
   useEffect(() => {
@@ -33,7 +34,7 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
     fetchPhotos()
   }, [fetchPhotos])
 
-  if (loading && emptyPhotos) {
+  if ((loading || isCalculating) && emptyPhotos) {
     return (
       <Styled.LoadingContainer>
         <Styled.Spinner />
@@ -73,7 +74,7 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
         </Styled.MasonryContent>
       </Styled.MasonryContainer>
 
-      <LoadMore />
+      <LoadMore isLoading={isCalculating || loading} />
     </>
   )
 })
