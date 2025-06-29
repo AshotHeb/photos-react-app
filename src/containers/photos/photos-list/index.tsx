@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import {
   usePhotoLoading,
   usePhotoError,
@@ -17,6 +17,7 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
   const error = usePhotoError()
   const fetchPhotos = usePhotoFetchPhotos()
   const emptyPhotos = useIsPhotosEmpty()
+  const hasInitialFetch = useRef(false)
 
   // Use masonry layout hook with viewport rendering
   const { layouts, totalHeight, containerRef, isCalculating } =
@@ -24,12 +25,13 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
       gap: 20
     })
 
-  // Initial load
+  // Initial load - only fetch once when photos are empty
   useEffect(() => {
-    if (emptyPhotos) {
+    if (emptyPhotos && !hasInitialFetch.current) {
+      hasInitialFetch.current = true
       fetchPhotos()
     }
-  }, [fetchPhotos, emptyPhotos])
+  }, [emptyPhotos])
 
   const handleRetry = useCallback(() => {
     fetchPhotos()
