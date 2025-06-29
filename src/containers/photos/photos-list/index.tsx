@@ -75,7 +75,7 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
         </Styled.MasonryContent>
       </Styled.MasonryContainer>
 
-      <LoadMore isLoading={isCalculating || loading} />
+      <LoadMore isLoading={loading} />
 
       {/* Scroll to top button */}
       <ScrollToTop threshold={500} smooth={true} />
