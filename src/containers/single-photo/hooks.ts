@@ -14,6 +14,7 @@ export const usePhotoData = () => {
   const error = useSinglePhotoError()
   const store = usePhotoStore()
   const fetchSinglePhotoRef = useRef(store.fetchSinglePhoto)
+  const lastFetchedId = useRef<string | null>(null)
 
   // Update ref when store changes
   useEffect(() => {
@@ -21,9 +22,11 @@ export const usePhotoData = () => {
   }, [store.fetchSinglePhoto])
 
   useEffect(() => {
-    if (!id) {
+    if (!id || lastFetchedId.current === id) {
       return
     }
+
+    lastFetchedId.current = id
     fetchSinglePhotoRef.current(parseInt(id))
   }, [id])
 
