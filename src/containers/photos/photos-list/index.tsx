@@ -58,18 +58,15 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
         <Styled.MasonryContent style={{ height: totalHeight }}>
           {layouts.map((layout) => {
             const transform = `translate3d(${layout.left}px, ${layout.top}px, 0)`
-
             return (
-              <Styled.MasonryItem
+              <PhotoItem
                 key={`photo-${layout.id}`}
-                style={{ width: layout.width, transform }}
-              >
-                <PhotoItem
-                  src={layout.photo.src}
-                  alt={layout.photo.alt}
-                  aspectRatio={layout.photo.aspectRatio}
-                />
-              </Styled.MasonryItem>
+                src={layout.photo.src}
+                alt={layout.photo.alt}
+                aspectRatio={layout.photo.aspectRatio}
+                transform={transform}
+                width={layout.width}
+              />
             )
           })}
         </Styled.MasonryContent>

@@ -3,16 +3,18 @@ import * as Styled from './styled'
 import type { PhotoItemProps } from '../types'
 
 export const PhotoItem: React.FC<PhotoItemProps> = React.memo(
-  ({ src, alt, aspectRatio }) => {
+  ({ src, alt, aspectRatio, transform, width }) => {
     return (
-      <Styled.PhotoItemWrapper>
-        <Styled.PhotoImage
-          src={src}
-          alt={alt}
-          loading="lazy"
-          $aspectRatio={aspectRatio}
-        />
-      </Styled.PhotoItemWrapper>
+      <Styled.MasonryItem style={{ width, transform }}>
+        <Styled.PhotoItemWrapper>
+          <Styled.PhotoImage
+            src={src}
+            alt={alt}
+            loading="lazy"
+            $aspectRatio={aspectRatio}
+          />
+        </Styled.PhotoItemWrapper>
+      </Styled.MasonryItem>
     )
   }
 )

@@ -69,9 +69,3 @@ export const MasonryContent = styled.div`
   position: relative;
   width: 100%;
 `
-
-export const MasonryItem = styled.div`
-  position: absolute;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-`

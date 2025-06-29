@@ -9,6 +9,8 @@ export interface PhotoItemProps {
   alt: string
   aspectRatio: number
   onClick?: () => void
+  transform: string
+  width: number
 }
 
 export interface MasonryPhoto {
