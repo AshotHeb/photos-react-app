@@ -1,6 +1,5 @@
 import { useRef, useCallback } from 'react'
-import type { PhotoSetMap } from '../types'
-import type { Photo } from './types'
+import type { PhotoSetMap, Photo } from '../types'
 import { runWhenIdle, calculateMasonryLayout } from './utils'
 
 export const useWorker = () => {

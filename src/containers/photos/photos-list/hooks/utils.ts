@@ -1,5 +1,4 @@
-import type { MasonryLayout, PhotoSetMap } from '../types'
-import type { Photo } from './types'
+import type { MasonryLayout, PhotoSetMap, Photo } from '../types'
 
 // Breakpoint constants
 export const BREAKPOINTS = {
@@ -122,8 +121,9 @@ export const calculateMasonryLayout = (
   }
 
   // Calculate positions for photos (either all or just new ones)
-  const existingLayoutsLength = Object.values(existingLayouts).length * gap
-  const startIndex = canReuse ? existingLayoutsLength : 0
+  const photosPerSet = gap
+  const existingPhotosCount = Object.values(existingLayouts).flat().length
+  const startIndex = canReuse ? existingPhotosCount : 0
 
   for (let i = startIndex; i < photos.length; i++) {
     const { layout, columnHeights: newColumnHeights } = calculatePhotoLayout(
@@ -134,8 +134,9 @@ export const calculateMasonryLayout = (
       gap,
       columnHeights
     )
-    // create new set of 20 photos
-    const setIndex = Math.floor(i / gap)
+
+    // Create sets of 20 photos each
+    const setIndex = Math.floor(i / photosPerSet)
     const setKey = `set-${setIndex}`
 
     const resultLayouts = layouts[setKey] || []

@@ -18,7 +18,7 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
   const fetchPhotos = usePhotoFetchPhotos()
   const emptyPhotos = useIsPhotosEmpty()
 
-  // Use masonry layout hook
+  // Use masonry layout hook with viewport rendering
   const { layouts, totalHeight, containerRef, isCalculating } =
     useMasonryLayout({
       gap: 20

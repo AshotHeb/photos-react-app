@@ -22,7 +22,7 @@ export const useLoadMore = () => {
       },
       {
         root: null,
-        rootMargin: '100px', // Start loading 100px before reaching the bottom
+        rootMargin: '2000px', // Start loading 100px before reaching the bottom
         threshold: 0.1
       }
     )

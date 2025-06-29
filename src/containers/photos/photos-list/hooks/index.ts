@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import type { PhotoSetMap } from '../types'
 import type {
+  PhotoSetMap,
   UseMasonryLayoutProps,
   UseMasonryLayoutReturn,
   Photo
-} from './types'
+} from '../types'
 import { useWorker } from './useWorker'
+import { useVirtualizedRendering } from './useVirtualizedRendering'
 import isEqual from 'lodash.isequal'
 import { usePhotoPhotos } from '@/stores'
 
@@ -45,6 +46,13 @@ export const useMasonryLayout = ({
   // Debounce width updates
   const debouncedWidth = useDebounce(containerWidth, debounceDelay)
   const { calculateLayout } = useWorker()
+
+  // Use viewport rendering
+  const { visibleLayouts } = useVirtualizedRendering({
+    layouts,
+    totalHeight,
+    bufferSets: 1
+  })
 
   // Memoized calculation function using worker with fallback
   const calculateLayouts = useCallback(async () => {
@@ -119,7 +127,7 @@ export const useMasonryLayout = ({
   }, [])
 
   return {
-    layouts: Object.values(layouts).flat(),
+    layouts: visibleLayouts, // Return only visible layouts
     totalHeight,
     containerRef,
     containerWidth: debouncedWidth,

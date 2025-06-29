@@ -1,24 +1,16 @@
-import type { MasonryLayout } from '../types'
+import type { PhotoSetMap } from '../types'
 
-export interface Photo {
-  id: number
-  width: number
-  height: number
-  src: {
-    medium: string
-  }
-  alt: string
-}
+// Re-export types from main types file
+export type {
+  Photo,
+  UseMasonryLayoutProps,
+  UseMasonryLayoutReturn,
+  ViewportState,
+  VisibleSetsInfo
+} from '../types'
 
-export interface UseMasonryLayoutProps {
-  gap?: number
-  debounceDelay?: number
-}
-
-export interface UseMasonryLayoutReturn {
-  layouts: MasonryLayout[]
+export interface UseVirtualizedRenderingProps {
+  layouts: PhotoSetMap
   totalHeight: number
-  containerRef: React.RefObject<HTMLDivElement | null>
-  containerWidth: number
-  isCalculating: boolean
+  bufferSets?: number // Number of sets to render above and below viewport
 }
