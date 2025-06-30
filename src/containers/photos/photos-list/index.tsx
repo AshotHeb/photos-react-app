@@ -7,7 +7,7 @@ import {
 import { LoadMore } from './load-more'
 import { PhotoItem } from './photo-item'
 import { ScrollToTop } from './scroll-to-top'
-import { useMasonryLayout } from './hooks'
+import { useMasonryLayout, useScrollPersistence } from './hooks'
 import * as Styled from './styled'
 import type { PhotosListProps } from './types'
 import { useIsPhotosEmpty } from '@/stores/photo-store/selectors'
@@ -18,6 +18,9 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
   const fetchPhotos = usePhotoFetchPhotos()
   const emptyPhotos = useIsPhotosEmpty()
   const hasInitialFetch = useRef(false)
+
+  // Use scroll persistence hook
+  useScrollPersistence()
 
   // Use masonry layout hook with viewport rendering
   const { layouts, totalHeight, containerRef, isCalculating } =

@@ -43,10 +43,12 @@ export {
   useTotalHeight,
   useContainerWidth,
   useVisibleSetsInfo,
+  useScrollTop,
   useSetLayouts,
   useSetTotalHeight,
   useSetContainerWidth,
-  useSetVisibleSetsInfo
+  useSetVisibleSetsInfo,
+  useSetScrollTop
 } from './selectors'
 
 export type * from './types'

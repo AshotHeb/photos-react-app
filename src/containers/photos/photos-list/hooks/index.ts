@@ -20,6 +20,10 @@ import isEqual from 'lodash.isequal'
 import { usePhotoPhotos } from '@/stores'
 import { useDebounce } from '@/hooks/use-debounce'
 
+// Export scroll persistence hook and types
+export { useScrollPersistence } from './useScrollPersistence'
+export type { UseScrollPersistenceReturn } from './useScrollPersistence'
+
 export const useMasonryLayout = ({
   gap = 20,
   debounceDelay = 150

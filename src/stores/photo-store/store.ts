@@ -224,7 +224,8 @@ export const usePhotoStore = create<Store<PhotoState>>()(
                     currentSetIndex: 0,
                     totalSets: 0,
                     setHeight: 0
-                  }
+                  },
+                  scrollTop: 0
                 }
           }),
           false,
@@ -244,7 +245,8 @@ export const usePhotoStore = create<Store<PhotoState>>()(
                     currentSetIndex: 0,
                     totalSets: 0,
                     setHeight: 0
-                  }
+                  },
+                  scrollTop: 0
                 }
           }),
           false,
@@ -264,7 +266,8 @@ export const usePhotoStore = create<Store<PhotoState>>()(
                     currentSetIndex: 0,
                     totalSets: 0,
                     setHeight: 0
-                  }
+                  },
+                  scrollTop: 0
                 }
           }),
           false,
@@ -279,11 +282,33 @@ export const usePhotoStore = create<Store<PhotoState>>()(
                   layouts: {},
                   totalHeight: 0,
                   containerWidth: 0,
-                  visibleSetsInfo
+                  visibleSetsInfo,
+                  scrollTop: 0
                 }
           }),
           false,
           'setVisibleSetsInfo'
+        ),
+      setScrollTop: (scrollTop: number) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, scrollTop }
+              : {
+                  layouts: {},
+                  totalHeight: 0,
+                  containerWidth: 0,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  },
+                  scrollTop
+                }
+          }),
+          false,
+          'setScrollTop'
         )
     }),
     {

@@ -171,6 +171,8 @@ export const useVisibleSetsInfo = () =>
   usePhotoStoreBase(
     (state) => state.layoutData?.visibleSetsInfo ?? DEFAULT_VISIBLE_SETS_INFO
   )
+export const useScrollTop = () =>
+  usePhotoStoreBase((state) => state.layoutData?.scrollTop ?? 0)
 
 // Separate layout action selectors
 export const useSetLayouts = () =>
@@ -181,3 +183,5 @@ export const useSetContainerWidth = () =>
   usePhotoStoreBase((state) => state.setContainerWidth)
 export const useSetVisibleSetsInfo = () =>
   usePhotoStoreBase((state) => state.setVisibleSetsInfo)
+export const useSetScrollTop = () =>
+  usePhotoStoreBase((state) => state.setScrollTop)
