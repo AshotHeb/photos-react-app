@@ -1,18 +1,16 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 import type { PhotoSetMap, VisibleSetsInfo } from '../types'
 import type { UseVirtualizedRenderingProps } from './types'
+import { useVisibleSetsInfo, useSetVisibleSetsInfo } from '@/stores'
 
 export const useVirtualizedRendering = ({
   layouts,
   totalHeight,
   bufferSets = 1
 }: UseVirtualizedRenderingProps) => {
-  const [visibleSetsInfo, setVisibleSetsInfo] = useState<VisibleSetsInfo>({
-    visibleSets: [],
-    currentSetIndex: 0,
-    totalSets: 0,
-    setHeight: 0
-  })
+  // Get visibleSetsInfo from store instead of local state
+  const visibleSetsInfo = useVisibleSetsInfo()
+  const setVisibleSetsInfo = useSetVisibleSetsInfo()
 
   const rafRef = useRef<number | undefined>(undefined)
 
@@ -81,7 +79,7 @@ export const useVirtualizedRendering = ({
       setVisibleSetsInfo(newVisibleSetsInfo)
       rafRef.current = undefined
     })
-  }, [totalHeight, layouts, calculateVisibleSets])
+  }, [totalHeight, layouts, calculateVisibleSets, setVisibleSetsInfo])
 
   // Update viewport state when layouts change
   useEffect(() => {
@@ -95,7 +93,7 @@ export const useVirtualizedRendering = ({
     )
 
     setVisibleSetsInfo(newVisibleSetsInfo)
-  }, [layouts, totalHeight, calculateVisibleSets])
+  }, [layouts, totalHeight, calculateVisibleSets, setVisibleSetsInfo])
 
   // Add scroll event listener
   useEffect(() => {

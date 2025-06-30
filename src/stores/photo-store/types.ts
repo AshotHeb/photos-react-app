@@ -61,6 +61,39 @@ export interface BaseActions {
   reset: () => void
 }
 
+export interface PhotoSetMap {
+  [key: string]: MasonryLayout[]
+}
+
+export interface MasonryLayout {
+  id: number
+  column: number
+  left: number
+  top: number
+  height: number
+  width: number
+  photo: {
+    id: number
+    src: string
+    alt: string
+    aspectRatio: number
+  }
+}
+
+export interface VisibleSetsInfo {
+  visibleSets: string[]
+  currentSetIndex: number
+  totalSets: number
+  setHeight: number
+}
+
+export interface LayoutData {
+  layouts: PhotoSetMap
+  totalHeight: number
+  containerWidth: number
+  visibleSetsInfo: VisibleSetsInfo
+}
+
 export interface PhotoActions {
   // Photo data actions
   setPhotos: (photos: Photo[]) => void
@@ -85,6 +118,14 @@ export interface PhotoActions {
   // Search actions
   setSearchQuery: (query: string) => void
   clearSearch: () => void
+
+  // Layout actions
+  setLayoutData: (data: LayoutData) => void
+  clearLayoutData: () => void
+  setLayouts: (layouts: PhotoSetMap) => void
+  setTotalHeight: (totalHeight: number) => void
+  setContainerWidth: (containerWidth: number) => void
+  setVisibleSetsInfo: (visibleSetsInfo: VisibleSetsInfo) => void
 
   // API response actions
   setPhotoResponse: (response: PhotoResponse) => void

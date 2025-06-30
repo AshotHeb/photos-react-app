@@ -34,7 +34,19 @@ export {
   usePhotoDataActions,
   usePhotoPaginationActions,
   usePhotoSearchActions,
-  usePhotoStore
+  usePhotoStore,
+  useLayoutData,
+  useSetLayoutData,
+  useClearLayoutData,
+  useHasLayoutData,
+  useLayouts,
+  useTotalHeight,
+  useContainerWidth,
+  useVisibleSetsInfo,
+  useSetLayouts,
+  useSetTotalHeight,
+  useSetContainerWidth,
+  useSetVisibleSetsInfo
 } from './selectors'
 
 export type * from './types'

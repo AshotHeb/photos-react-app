@@ -1,5 +1,14 @@
 import { usePhotoStore as usePhotoStoreBase } from './store'
 
+// Stable default values to prevent infinite loops
+const EMPTY_LAYOUTS = {}
+const DEFAULT_VISIBLE_SETS_INFO = {
+  visibleSets: [],
+  currentSetIndex: 0,
+  totalSets: 0,
+  setHeight: 0
+}
+
 export const usePhotoLoading = () => usePhotoStoreBase((state) => state.loading)
 export const usePhotoError = () => usePhotoStoreBase((state) => state.error)
 export const usePhotoPhotos = () => usePhotoStoreBase((state) => state.photos)
@@ -140,3 +149,35 @@ export const usePhotoStore = () => {
     ...actions
   }
 }
+
+// Layout selectors
+export const useLayoutData = () =>
+  usePhotoStoreBase((state) => state.layoutData)
+export const useSetLayoutData = () =>
+  usePhotoStoreBase((state) => state.setLayoutData)
+export const useClearLayoutData = () =>
+  usePhotoStoreBase((state) => state.clearLayoutData)
+export const useHasLayoutData = () =>
+  usePhotoStoreBase((state) => !!state.layoutData)
+
+// Separate layout selectors with stable references
+export const useLayouts = () =>
+  usePhotoStoreBase((state) => state.layoutData?.layouts ?? EMPTY_LAYOUTS)
+export const useTotalHeight = () =>
+  usePhotoStoreBase((state) => state.layoutData?.totalHeight ?? 0)
+export const useContainerWidth = () =>
+  usePhotoStoreBase((state) => state.layoutData?.containerWidth ?? 0)
+export const useVisibleSetsInfo = () =>
+  usePhotoStoreBase(
+    (state) => state.layoutData?.visibleSetsInfo ?? DEFAULT_VISIBLE_SETS_INFO
+  )
+
+// Separate layout action selectors
+export const useSetLayouts = () =>
+  usePhotoStoreBase((state) => state.setLayouts)
+export const useSetTotalHeight = () =>
+  usePhotoStoreBase((state) => state.setTotalHeight)
+export const useSetContainerWidth = () =>
+  usePhotoStoreBase((state) => state.setContainerWidth)
+export const useSetVisibleSetsInfo = () =>
+  usePhotoStoreBase((state) => state.setVisibleSetsInfo)

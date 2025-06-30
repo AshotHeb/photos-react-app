@@ -7,6 +7,15 @@ import type {
 } from '../types'
 import { useWorker } from './useWorker'
 import { useVirtualizedRendering } from './useVirtualizedRendering'
+import {
+  useLayouts,
+  useTotalHeight,
+  useContainerWidth,
+  useSetLayouts,
+  useSetTotalHeight,
+  useSetContainerWidth,
+  useSetVisibleSetsInfo
+} from '@/stores'
 import isEqual from 'lodash.isequal'
 import { usePhotoPhotos } from '@/stores'
 import { useDebounce } from '@/hooks/use-debounce'
@@ -17,10 +26,18 @@ export const useMasonryLayout = ({
 }: UseMasonryLayoutProps): UseMasonryLayoutReturn => {
   const photos = usePhotoPhotos()
   const containerRef = useRef<HTMLDivElement>(null)
-  const [containerWidth, setContainerWidth] = useState(0)
-  const [layouts, setLayouts] = useState<PhotoSetMap>({})
-  const [totalHeight, setTotalHeight] = useState(0)
   const [isCalculating, setIsCalculating] = useState(false)
+
+  // Get layout data from store using separate selectors
+  const layouts = useLayouts()
+  const totalHeight = useTotalHeight()
+  const containerWidth = useContainerWidth()
+
+  // Get separate layout actions
+  const setLayouts = useSetLayouts()
+  const setTotalHeight = useSetTotalHeight()
+  const setContainerWidth = useSetContainerWidth()
+  const setVisibleSetsInfo = useSetVisibleSetsInfo()
 
   // Track previous state for optimization
   const previousPhotosRef = useRef<Photo[]>([])
@@ -92,23 +109,30 @@ export const useMasonryLayout = ({
     return () => {
       isMounted = false
     }
-  }, [calculateLayouts, layouts, totalHeight, photos, debouncedWidth])
+  }, [
+    calculateLayouts,
+    layouts,
+    totalHeight,
+    photos,
+    debouncedWidth,
+    setLayouts,
+    setTotalHeight,
+    setVisibleSetsInfo
+  ])
 
   // Handle resize events
   useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current) {
         const newWidth = containerRef.current.clientWidth
-        setContainerWidth((prevWidth) => {
-          return prevWidth !== newWidth ? newWidth : prevWidth
-        })
+        setContainerWidth(newWidth)
       }
     }
 
     updateWidth()
     window.addEventListener('resize', updateWidth, { passive: true })
     return () => window.removeEventListener('resize', updateWidth)
-  }, [])
+  }, [setContainerWidth])
 
   return {
     layouts: visibleLayouts, // Return only visible layouts

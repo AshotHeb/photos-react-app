@@ -1,6 +1,13 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import type { Photo, Store, PhotoResponse } from './types'
+import type {
+  Photo,
+  Store,
+  PhotoResponse,
+  LayoutData,
+  PhotoSetMap,
+  VisibleSetsInfo
+} from './types'
 import { pexelsApi } from '@/api/services/pexels'
 
 interface PhotoState {
@@ -16,6 +23,9 @@ interface PhotoState {
 
   searchQuery: string
   perPage: number
+
+  // Layout state
+  layoutData: LayoutData | null
 }
 
 export const usePhotoStore = create<Store<PhotoState>>()(
@@ -35,6 +45,9 @@ export const usePhotoStore = create<Store<PhotoState>>()(
       searchQuery: '',
       perPage: 20,
 
+      // Layout state
+      layoutData: null,
+
       // Base actions
       setLoading: (loading) => set({ loading }),
       setError: (error) => set({ error }),
@@ -52,7 +65,8 @@ export const usePhotoStore = create<Store<PhotoState>>()(
           hasMore: false,
           totalResults: 0,
           searchQuery: '',
-          perPage: 20
+          perPage: 20,
+          layoutData: null
         }),
 
       // Photo actions
@@ -187,7 +201,90 @@ export const usePhotoStore = create<Store<PhotoState>>()(
         }
 
         await _fetchPhotosFromApi(1, perPage, 'Failed to fetch photos')
-      }
+      },
+
+      // Layout actions
+      setLayoutData: (data: LayoutData) =>
+        set({ layoutData: data }, false, 'setLayoutData'),
+      clearLayoutData: () =>
+        set({ layoutData: null }, false, 'clearLayoutData'),
+
+      // Separate layout actions
+      setLayouts: (layouts: PhotoSetMap) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, layouts }
+              : {
+                  layouts,
+                  totalHeight: 0,
+                  containerWidth: 0,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  }
+                }
+          }),
+          false,
+          'setLayouts'
+        ),
+      setTotalHeight: (totalHeight: number) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, totalHeight }
+              : {
+                  layouts: {},
+                  totalHeight,
+                  containerWidth: 0,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  }
+                }
+          }),
+          false,
+          'setTotalHeight'
+        ),
+      setContainerWidth: (containerWidth: number) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, containerWidth }
+              : {
+                  layouts: {},
+                  totalHeight: 0,
+                  containerWidth,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  }
+                }
+          }),
+          false,
+          'setContainerWidth'
+        ),
+      setVisibleSetsInfo: (visibleSetsInfo: VisibleSetsInfo) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, visibleSetsInfo }
+              : {
+                  layouts: {},
+                  totalHeight: 0,
+                  containerWidth: 0,
+                  visibleSetsInfo
+                }
+          }),
+          false,
+          'setVisibleSetsInfo'
+        )
     }),
     {
       name: 'photo-store'
