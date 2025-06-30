@@ -1,12 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useScrollTop, useSetScrollTop } from '@/stores/photo-store'
+import type { UseScrollPersistenceReturn } from './types'
 
-export interface UseScrollPersistenceReturn {
-  scrollTop: number
-  setScrollTop: (scrollTop: number) => void
-}
-
-export const useScrollPersistence = () => {
+export const useScrollPersistence = (): UseScrollPersistenceReturn => {
   const scrollTop = useScrollTop()
   const setScrollTop = useSetScrollTop()
   const lastScrollPosition = useRef(0)
@@ -47,3 +43,5 @@ export const useScrollPersistence = () => {
 
   return { scrollTop, setScrollTop }
 }
+
+export type * from './types'

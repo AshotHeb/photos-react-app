@@ -1,13 +1,16 @@
 import { useEffect, useCallback, useRef } from 'react'
-import type { PhotoSetMap, VisibleSetsInfo } from '../types'
-import type { UseVirtualizedRenderingProps } from './types'
+import type { PhotoSetMap, VisibleSetsInfo } from '../../types'
+import type {
+  UseVirtualizedRenderingProps,
+  UseVirtualizedRenderingReturn
+} from './types'
 import { useVisibleSetsInfo, useSetVisibleSetsInfo } from '@/stores'
 
 export const useVirtualizedRendering = ({
   layouts,
   totalHeight,
   bufferSets = 1
-}: UseVirtualizedRenderingProps) => {
+}: UseVirtualizedRenderingProps): UseVirtualizedRenderingReturn => {
   // Get visibleSetsInfo from store instead of local state
   const visibleSetsInfo = useVisibleSetsInfo()
   const setVisibleSetsInfo = useSetVisibleSetsInfo()
@@ -120,3 +123,5 @@ export const useVirtualizedRendering = ({
     visibleLayouts: getVisibleLayouts()
   }
 }
+
+export type * from './types'

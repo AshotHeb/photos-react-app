@@ -1,19 +1,12 @@
 import { useRef, useCallback } from 'react'
-import type { PhotoSetMap, Photo } from '../types'
-import { runWhenIdle, calculateMasonryLayout } from './utils'
+import { runWhenIdle, calculateMasonryLayout } from '../utils'
+import type { WorkerParams, WorkerResult, UseWorkerReturn } from './types'
 
-export const useWorker = () => {
+export const useWorker = (): UseWorkerReturn => {
   const workerRef = useRef<Worker | null>(null)
 
   const calculateLayout = useCallback(
-    async (params: {
-      photos: Photo[]
-      containerWidth: number
-      gap: number
-      existingLayouts: PhotoSetMap
-      previousPhotos: Photo[]
-      previousWidth: number
-    }) => {
+    async (params: WorkerParams): Promise<WorkerResult> => {
       // Try web worker first
       try {
         if (!workerRef.current) {
@@ -22,21 +15,19 @@ export const useWorker = () => {
           )
         }
 
-        return new Promise<{ layouts: PhotoSetMap; totalHeight: number }>(
-          (resolve, reject) => {
-            const worker = workerRef.current!
+        return new Promise<WorkerResult>((resolve, reject) => {
+          const worker = workerRef.current!
 
-            worker.onmessage = (event) => {
-              if (event.data.success) {
-                resolve(event.data.result)
-              } else {
-                reject(new Error(event.data.error))
-              }
+          worker.onmessage = (event) => {
+            if (event.data.success) {
+              resolve(event.data.result)
+            } else {
+              reject(new Error(event.data.error))
             }
-
-            worker.postMessage(params)
           }
-        )
+
+          worker.postMessage(params)
+        })
       } catch {
         // Fallback to requestIdleCallback on main thread
         return runWhenIdle(() => {
@@ -56,3 +47,5 @@ export const useWorker = () => {
 
   return { calculateLayout }
 }
+
+export type * from './types'
