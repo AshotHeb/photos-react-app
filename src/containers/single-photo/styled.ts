@@ -6,10 +6,13 @@ const spin = keyframes`
 `
 
 // Main Container
-export const Container = styled.div`
+export const Container = styled.div<{ $centered?: boolean }>`
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  padding: ${(props) => (props.$centered ? '0' : '20px')};
+  display: ${(props) => (props.$centered ? 'flex' : 'block')};
+  align-items: ${(props) => (props.$centered ? 'center' : 'initial')};
+  justify-content: ${(props) => (props.$centered ? 'center' : 'initial')};
 `
 
 export const Content = styled.div`

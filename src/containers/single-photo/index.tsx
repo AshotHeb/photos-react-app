@@ -12,7 +12,7 @@ export const SinglePhoto = () => {
 
   if (loading) {
     return (
-      <Container>
+      <Container $centered>
         <Loading />
       </Container>
     )
@@ -20,7 +20,7 @@ export const SinglePhoto = () => {
 
   if (error || !photo) {
     return (
-      <Container>
+      <Container $centered>
         <Error
           error={error || 'Photo not found'}
           onBackClick={handleBackClick}
