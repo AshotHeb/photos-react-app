@@ -11,7 +11,8 @@ export const useWorker = (): UseWorkerReturn => {
       try {
         if (!workerRef.current) {
           workerRef.current = new Worker(
-            new URL('@/workers/masonry.worker.ts', import.meta.url)
+            new URL('@/workers/masonry.worker.ts', import.meta.url),
+            { type: 'module' }
           )
         }
 

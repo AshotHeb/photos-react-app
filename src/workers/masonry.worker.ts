@@ -1,4 +1,6 @@
-self.onmessage = async (event) => {
+import { calculateMasonryLayout } from '../containers/photos/photos-list/hooks/utils'
+
+self.onmessage = (event) => {
   const {
     photos,
     containerWidth,
@@ -9,13 +11,6 @@ self.onmessage = async (event) => {
   } = event.data
 
   try {
-    // Import the calculation function
-    const { calculateMasonryLayout } = await import(
-      '../containers/photos/photos-list/hooks/utils'
-    )
-
-    // In workers, we can run calculations directly since we're already off the main thread
-    // No need for requestIdleCallback as the main thread is already free
     const result = calculateMasonryLayout(
       photos,
       containerWidth,
