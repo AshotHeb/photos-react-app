@@ -9,23 +9,7 @@ import { useWorker } from './useWorker'
 import { useVirtualizedRendering } from './useVirtualizedRendering'
 import isEqual from 'lodash.isequal'
 import { usePhotoPhotos } from '@/stores'
-
-// Debounce utility
-const useDebounce = (value: number, delay: number): number => {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-
-    return () => {
-      clearTimeout(handler)
-    }
-  }, [value, delay])
-
-  return debouncedValue
-}
+import { useDebounce } from '@/hooks/use-debounce'
 
 export const useMasonryLayout = ({
   gap = 20,
