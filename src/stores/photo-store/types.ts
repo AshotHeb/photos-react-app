@@ -92,6 +92,7 @@ export interface LayoutData {
   totalHeight: number
   containerWidth: number
   visibleSetsInfo: VisibleSetsInfo
+  scrollTop: number
 }
 
 export interface PhotoActions {
@@ -126,6 +127,7 @@ export interface PhotoActions {
   setTotalHeight: (totalHeight: number) => void
   setContainerWidth: (containerWidth: number) => void
   setVisibleSetsInfo: (visibleSetsInfo: VisibleSetsInfo) => void
+  setScrollTop: (scrollTop: number) => void
 
   // API response actions
   setPhotoResponse: (response: PhotoResponse) => void
