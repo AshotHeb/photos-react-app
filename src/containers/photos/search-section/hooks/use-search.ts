@@ -17,6 +17,9 @@ export const useSearch = (): SearchHookReturn => {
     setInputValue(storeQuery)
   }, [storeQuery])
 
+  // Check if the search would be the same as current
+  const isSameSearch = inputValue.trim() === storeQuery
+
   // Handle input change
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,19 +30,19 @@ export const useSearch = (): SearchHookReturn => {
 
   // Handle search button click
   const handleSearchClick = useCallback(() => {
-    if (inputValue.trim()) {
+    if (inputValue.trim() && !isSameSearch) {
       searchPhotos(inputValue.trim())
     }
-  }, [inputValue, searchPhotos])
+  }, [inputValue, searchPhotos, isSameSearch])
 
   // Handle Enter key press
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && inputValue.trim()) {
+      if (e.key === 'Enter' && inputValue.trim() && !isSameSearch) {
         searchPhotos(inputValue.trim())
       }
     },
-    [inputValue, searchPhotos]
+    [inputValue, searchPhotos, isSameSearch]
   )
 
   return {
@@ -53,6 +56,6 @@ export const useSearch = (): SearchHookReturn => {
     handleKeyDown,
 
     // Computed values
-    isSearchDisabled: isSearching || !inputValue.trim()
+    isSearchDisabled: isSearching || !inputValue.trim() || isSameSearch
   }
 }
