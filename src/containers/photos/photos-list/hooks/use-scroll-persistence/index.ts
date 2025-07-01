@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { useScrollTop, useSetScrollTop } from '@/stores/photo-store'
 import type { UseScrollPersistenceReturn } from './types'
 
@@ -8,7 +8,7 @@ export const useScrollPersistence = (): UseScrollPersistenceReturn => {
   const lastScrollPosition = useRef(0)
 
   // Track scroll position in real-time
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleScroll = () => {
       const currentScrollTop = Math.max(
         window.scrollY,
@@ -29,7 +29,7 @@ export const useScrollPersistence = (): UseScrollPersistenceReturn => {
   }, [setScrollTop])
 
   // Restore scroll position on mount
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scrollTop > 0) {
       // Use setTimeout to ensure DOM is ready
       requestAnimationFrame(() => {
