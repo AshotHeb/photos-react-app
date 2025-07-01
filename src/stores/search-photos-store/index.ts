@@ -19,7 +19,22 @@ export {
   useIsSearchActive,
   useHasSearchResults,
   useSearchResultsCount,
-  useSearchState
+  useSearchState,
+  // Layout selectors
+  useSearchLayoutData,
+  useSetSearchLayoutData,
+  useClearSearchLayoutData,
+  useHasSearchLayoutData,
+  useSearchLayouts,
+  useSearchTotalHeight,
+  useSearchContainerWidth,
+  useSearchVisibleSetsInfo,
+  useSearchScrollTop,
+  useSetSearchLayouts,
+  useSetSearchTotalHeight,
+  useSetSearchContainerWidth,
+  useSetSearchVisibleSetsInfo,
+  useSetSearchScrollTop
 } from './selectors'
 
 // Types

@@ -72,6 +72,48 @@ export const useHasSearchResults = () =>
 export const useSearchResultsCount = () =>
   useSearchPhotosStoreBase((state) => state.results.length)
 
+// Layout selectors
+export const useSearchLayoutData = () =>
+  useSearchPhotosStoreBase((state) => state.layoutData)
+export const useSetSearchLayoutData = () =>
+  useSearchPhotosStoreBase((state) => state.setLayoutData)
+export const useClearSearchLayoutData = () =>
+  useSearchPhotosStoreBase((state) => state.clearLayoutData)
+export const useHasSearchLayoutData = () =>
+  useSearchPhotosStoreBase((state) => !!state.layoutData)
+
+// Separate layout selectors with stable references
+export const useSearchLayouts = () =>
+  useSearchPhotosStoreBase((state) => state.layoutData?.layouts ?? {})
+export const useSearchTotalHeight = () =>
+  useSearchPhotosStoreBase((state) => state.layoutData?.totalHeight ?? 0)
+export const useSearchContainerWidth = () =>
+  useSearchPhotosStoreBase((state) => state.layoutData?.containerWidth ?? 0)
+export const useSearchVisibleSetsInfo = () =>
+  useSearchPhotosStoreBase(
+    (state) =>
+      state.layoutData?.visibleSetsInfo ?? {
+        visibleSets: [],
+        currentSetIndex: 0,
+        totalSets: 0,
+        setHeight: 0
+      }
+  )
+export const useSearchScrollTop = () =>
+  useSearchPhotosStoreBase((state) => state.layoutData?.scrollTop ?? 0)
+
+// Separate layout action selectors
+export const useSetSearchLayouts = () =>
+  useSearchPhotosStoreBase((state) => state.setLayouts)
+export const useSetSearchTotalHeight = () =>
+  useSearchPhotosStoreBase((state) => state.setTotalHeight)
+export const useSetSearchContainerWidth = () =>
+  useSearchPhotosStoreBase((state) => state.setContainerWidth)
+export const useSetSearchVisibleSetsInfo = () =>
+  useSearchPhotosStoreBase((state) => state.setVisibleSetsInfo)
+export const useSetSearchScrollTop = () =>
+  useSearchPhotosStoreBase((state) => state.setScrollTop)
+
 // Combined selector for common use cases
 export const useSearchState = () =>
   useSearchPhotosStoreBase((state) => ({

@@ -1,7 +1,12 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { pexelsApi } from '@/api/services/pexels'
-import type { PhotoResponse } from '@/stores/photo-store/types'
+import type {
+  PhotoResponse,
+  LayoutData,
+  PhotoSetMap,
+  VisibleSetsInfo
+} from '@/stores/photo-store/types'
 import type { SearchStore, SearchPhotosParams } from './types'
 
 const DEFAULT_PER_PAGE = 20
@@ -21,6 +26,7 @@ export const useSearchPhotosStore = create<SearchStore>()(
       size: null,
       color: null,
       locale: null,
+      layoutData: null,
 
       // Query actions
       setQuery: (query: string) => set({ query }),
@@ -92,8 +98,117 @@ export const useSearchPhotosStore = create<SearchStore>()(
           orientation: null,
           size: null,
           color: null,
-          locale: null
+          locale: null,
+          layoutData: null
         }),
+
+      // Layout actions
+      setLayoutData: (data: LayoutData) =>
+        set({ layoutData: data }, false, 'setLayoutData'),
+      clearLayoutData: () =>
+        set({ layoutData: null }, false, 'clearLayoutData'),
+
+      // Separate layout actions
+      setLayouts: (layouts: PhotoSetMap) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, layouts }
+              : {
+                  layouts,
+                  totalHeight: 0,
+                  containerWidth: 0,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  },
+                  scrollTop: 0
+                }
+          }),
+          false,
+          'setLayouts'
+        ),
+      setTotalHeight: (totalHeight: number) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, totalHeight }
+              : {
+                  layouts: {},
+                  totalHeight,
+                  containerWidth: 0,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  },
+                  scrollTop: 0
+                }
+          }),
+          false,
+          'setTotalHeight'
+        ),
+      setContainerWidth: (containerWidth: number) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, containerWidth }
+              : {
+                  layouts: {},
+                  totalHeight: 0,
+                  containerWidth,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  },
+                  scrollTop: 0
+                }
+          }),
+          false,
+          'setContainerWidth'
+        ),
+      setVisibleSetsInfo: (visibleSetsInfo: VisibleSetsInfo) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, visibleSetsInfo }
+              : {
+                  layouts: {},
+                  totalHeight: 0,
+                  containerWidth: 0,
+                  visibleSetsInfo,
+                  scrollTop: 0
+                }
+          }),
+          false,
+          'setVisibleSetsInfo'
+        ),
+      setScrollTop: (scrollTop: number) =>
+        set(
+          (state) => ({
+            layoutData: state.layoutData
+              ? { ...state.layoutData, scrollTop }
+              : {
+                  layouts: {},
+                  totalHeight: 0,
+                  containerWidth: 0,
+                  visibleSetsInfo: {
+                    visibleSets: [],
+                    currentSetIndex: 0,
+                    totalSets: 0,
+                    setHeight: 0
+                  },
+                  scrollTop
+                }
+          }),
+          false,
+          'setScrollTop'
+        ),
 
       // Internal actions
       _fetchResults: async (page: number, perPage: number) => {

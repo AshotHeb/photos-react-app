@@ -1,4 +1,9 @@
 import type { Photo } from '@/stores/photo-store/types'
+import type {
+  LayoutData,
+  PhotoSetMap,
+  VisibleSetsInfo
+} from '@/stores/photo-store/types'
 
 export interface SearchState {
   // Query state
@@ -17,6 +22,9 @@ export interface SearchState {
   size: 'large' | 'medium' | 'small' | null
   color: string | null
   locale: string | null
+
+  // Layout state
+  layoutData: LayoutData | null
 }
 
 export interface SearchActions {
@@ -52,6 +60,15 @@ export interface SearchActions {
 
   // Reset actions
   reset: () => void
+
+  // Layout actions
+  setLayoutData: (data: LayoutData) => void
+  clearLayoutData: () => void
+  setLayouts: (layouts: PhotoSetMap) => void
+  setTotalHeight: (totalHeight: number) => void
+  setContainerWidth: (containerWidth: number) => void
+  setVisibleSetsInfo: (visibleSetsInfo: VisibleSetsInfo) => void
+  setScrollTop: (scrollTop: number) => void
 
   // Internal actions
   _fetchResults: (page: number, perPage: number) => Promise<void>
