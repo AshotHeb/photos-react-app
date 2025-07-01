@@ -1,3 +1,7 @@
+import {
+  DEFAULT_VISIBLE_SETS_INFO,
+  EMPTY_LAYOUTS
+} from '../photo-store/selectors'
 import { useSearchPhotosStore as useSearchPhotosStoreBase } from './store'
 
 // State selectors
@@ -72,6 +76,9 @@ export const useHasSearchResults = () =>
 export const useSearchResultsCount = () =>
   useSearchPhotosStoreBase((state) => state.results.length)
 
+export const useSearchHasMore = () =>
+  useSearchPhotosStoreBase((state) => state.hasMore)
+
 // Layout selectors
 export const useSearchLayoutData = () =>
   useSearchPhotosStoreBase((state) => state.layoutData)
@@ -84,20 +91,16 @@ export const useHasSearchLayoutData = () =>
 
 // Separate layout selectors with stable references
 export const useSearchLayouts = () =>
-  useSearchPhotosStoreBase((state) => state.layoutData?.layouts ?? {})
+  useSearchPhotosStoreBase(
+    (state) => state.layoutData?.layouts ?? EMPTY_LAYOUTS
+  )
 export const useSearchTotalHeight = () =>
   useSearchPhotosStoreBase((state) => state.layoutData?.totalHeight ?? 0)
 export const useSearchContainerWidth = () =>
   useSearchPhotosStoreBase((state) => state.layoutData?.containerWidth ?? 0)
 export const useSearchVisibleSetsInfo = () =>
   useSearchPhotosStoreBase(
-    (state) =>
-      state.layoutData?.visibleSetsInfo ?? {
-        visibleSets: [],
-        currentSetIndex: 0,
-        totalSets: 0,
-        setHeight: 0
-      }
+    (state) => state.layoutData?.visibleSetsInfo ?? DEFAULT_VISIBLE_SETS_INFO
   )
 export const useSearchScrollTop = () =>
   useSearchPhotosStoreBase((state) => state.layoutData?.scrollTop ?? 0)

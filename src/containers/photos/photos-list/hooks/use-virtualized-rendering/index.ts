@@ -4,16 +4,14 @@ import type {
   UseVirtualizedRenderingProps,
   UseVirtualizedRenderingReturn
 } from './types'
-import { useVisibleSetsInfo, useSetVisibleSetsInfo } from '@/stores'
+import { useAppVisibleSetsInfo } from '@/stores/app-selectors'
 
 export const useVirtualizedRendering = ({
   layouts,
   totalHeight,
   bufferSets = 1
 }: UseVirtualizedRenderingProps): UseVirtualizedRenderingReturn => {
-  // Get visibleSetsInfo from store instead of local state
-  const visibleSetsInfo = useVisibleSetsInfo()
-  const setVisibleSetsInfo = useSetVisibleSetsInfo()
+  const { visibleSetsInfo, setVisibleSetsInfo } = useAppVisibleSetsInfo()
 
   const rafRef = useRef<number | undefined>(undefined)
 

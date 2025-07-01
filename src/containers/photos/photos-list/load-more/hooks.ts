@@ -1,14 +1,9 @@
 import { useCallback, useRef, useEffect } from 'react'
-import {
-  usePhotoFetchPhotos,
-  usePhotoHasMore,
-  usePhotoPhotos
-} from '@/stores/photo-store'
+import { useLoadMoreData } from '@/stores/app-selectors'
 
 export const useLoadMore = () => {
-  const fetchPhotos = usePhotoFetchPhotos()
-  const hasMore = usePhotoHasMore()
-  const photos = usePhotoPhotos()
+  const { fetchPhotos, hasMore, photos } = useLoadMoreData()
+
   const fetchPhotosRef = useRef(fetchPhotos)
   const isLoadingRef = useRef(false)
   const hasTriggeredRef = useRef(false)
@@ -26,6 +21,7 @@ export const useLoadMore = () => {
     // 3. No photos exist yet (initial state)
     // 4. Already triggered in this session
     // 5. Component just mounted (prevent immediate trigger)
+
     if (
       isLoadingRef.current ||
       !hasMore ||

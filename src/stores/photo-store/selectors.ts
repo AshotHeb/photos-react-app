@@ -1,8 +1,8 @@
 import { usePhotoStore as usePhotoStoreBase } from './store'
 
 // Stable default values to prevent infinite loops
-const EMPTY_LAYOUTS = {}
-const DEFAULT_VISIBLE_SETS_INFO = {
+export const EMPTY_LAYOUTS = {}
+export const DEFAULT_VISIBLE_SETS_INFO = {
   visibleSets: [],
   currentSetIndex: 0,
   totalSets: 0,

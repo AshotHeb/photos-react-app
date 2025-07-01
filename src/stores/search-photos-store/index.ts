@@ -19,6 +19,7 @@ export {
   useIsSearchActive,
   useHasSearchResults,
   useSearchResultsCount,
+  useSearchHasMore,
   useSearchState,
   // Layout selectors
   useSearchLayoutData,
