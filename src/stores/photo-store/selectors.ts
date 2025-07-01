@@ -14,8 +14,7 @@ export const usePhotoError = () => usePhotoStoreBase((state) => state.error)
 export const usePhotoPhotos = () => usePhotoStoreBase((state) => state.photos)
 export const useIsPhotosEmpty = () =>
   usePhotoStoreBase((state) => state.photos.length === 0)
-export const usePhotoSelected = () =>
-  usePhotoStoreBase((state) => state.selectedPhoto)
+
 export const usePhotoCurrentPage = () =>
   usePhotoStoreBase((state) => state.currentPage)
 export const usePhotoHasMore = () => usePhotoStoreBase((state) => state.hasMore)
@@ -75,8 +74,6 @@ export const usePhotoAddPhotos = () =>
   usePhotoStoreBase((state) => state.addPhotos)
 export const usePhotoClearPhotos = () =>
   usePhotoStoreBase((state) => state.clearPhotos)
-export const usePhotoSetSelected = () =>
-  usePhotoStoreBase((state) => state.setSelectedPhoto)
 export const usePhotoUpdate = () =>
   usePhotoStoreBase((state) => state.updatePhoto)
 export const usePhotoRemove = () =>
@@ -130,7 +127,6 @@ export const usePhotoStore = () => {
   const loading = usePhotoLoading()
   const error = usePhotoError()
   const photos = usePhotoPhotos()
-  const selectedPhoto = usePhotoSelected()
   const currentPage = usePhotoCurrentPage()
   const hasMore = usePhotoHasMore()
   const totalResults = usePhotoTotalResults()
@@ -141,7 +137,6 @@ export const usePhotoStore = () => {
     loading,
     error,
     photos,
-    selectedPhoto,
     currentPage,
     hasMore,
     totalResults,

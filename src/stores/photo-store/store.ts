@@ -15,7 +15,7 @@ interface PhotoState {
   error: string | null
 
   photos: Photo[]
-  selectedPhoto: Photo | null
+
   singlePhoto: Photo | null
   singlePhotoLoading: boolean
   singlePhotoError: string | null
@@ -60,7 +60,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
           loading: false,
           error: null,
           photos: [],
-          selectedPhoto: null,
           singlePhoto: null,
           singlePhotoLoading: false,
           singlePhotoError: null,
@@ -79,8 +78,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
         set({ photos: [...photos, ...newPhotos] })
       },
       clearPhotos: () => set({ photos: [], currentPage: 1, hasMore: false }),
-
-      setSelectedPhoto: (photo: Photo | null) => set({ selectedPhoto: photo }),
 
       // Single photo actions
       setSinglePhoto: (photo: Photo | null) => set({ singlePhoto: photo }),
