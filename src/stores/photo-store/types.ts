@@ -110,10 +110,6 @@ export interface PhotoActions {
   setTotalResults: (total: number) => void
   incrementPage: () => void
 
-  // Search actions
-  setSearchQuery: (query: string) => void
-  clearSearch: () => void
-
   // Layout actions
   setLayoutData: (data: LayoutData) => void
   clearLayoutData: () => void
