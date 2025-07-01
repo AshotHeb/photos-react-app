@@ -11,11 +11,11 @@ export const SpinnerContainer = styled.div`
   justify-content: center;
 `
 
-export const SpinnerIcon = styled.div`
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid white;
+export const SmallSpinnerIcon = styled.div`
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid rgba(102, 126, 234, 0.3);
+  border-top: 1.5px solid #667eea;
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
 `

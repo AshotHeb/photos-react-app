@@ -46,27 +46,6 @@ export const SearchInput = styled.input`
   }
 `
 
-export const SearchButton = styled.button`
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-`
-
 export const PhotosSection = styled.section`
   padding: 2rem;
   width: 100%;
@@ -147,10 +126,6 @@ export const ResponsiveContainer = styled.div`
   @media (max-width: 768px) {
     ${SearchSection} {
       padding: 1rem;
-    }
-
-    ${SearchContainer} {
-      flex-direction: column;
     }
 
     ${PhotosSection} {

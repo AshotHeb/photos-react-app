@@ -1,7 +1,7 @@
 import * as Styled from './styled'
 
-export const Spinner: React.FC = () => (
+export const InputSpinner: React.FC = () => (
   <Styled.SpinnerContainer>
-    <Styled.SpinnerIcon />
+    <Styled.SmallSpinnerIcon />
   </Styled.SpinnerContainer>
 )
