@@ -9,6 +9,7 @@ export interface SearchHookReturn {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleSearchClick: () => void
   handleKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void
+  handleClearSearch: () => void
 
   // Computed values
   isSearchDisabled: boolean

@@ -2,7 +2,8 @@ import { useState, useCallback, useEffect } from 'react'
 import {
   useIsSearching,
   useSearchPhotos,
-  useSearchQuery
+  useSearchQuery,
+  useClearSearchQuery
 } from '@/stores/search-photos-store'
 import type { SearchHookReturn } from './types'
 
@@ -10,6 +11,7 @@ export const useSearch = (): SearchHookReturn => {
   const [inputValue, setInputValue] = useState('')
   const isSearching = useIsSearching()
   const searchPhotos = useSearchPhotos()
+  const clearSearchQuery = useClearSearchQuery()
   const storeQuery = useSearchQuery()
 
   // Sync input value with store query when component mounts or store query changes
@@ -23,9 +25,15 @@ export const useSearch = (): SearchHookReturn => {
   // Handle input change
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(e.target.value)
+      const newValue = e.target.value
+      setInputValue(newValue)
+
+      // If input becomes empty, clear search and show all photos
+      if (!newValue.trim() && storeQuery.trim()) {
+        clearSearchQuery()
+      }
     },
-    []
+    [storeQuery, clearSearchQuery]
   )
 
   // Handle search button click
@@ -45,6 +53,12 @@ export const useSearch = (): SearchHookReturn => {
     [inputValue, searchPhotos, isSameSearch]
   )
 
+  // Handle clear search
+  const handleClearSearch = useCallback(() => {
+    setInputValue('')
+    clearSearchQuery()
+  }, [clearSearchQuery])
+
   return {
     // State
     inputValue,
@@ -54,6 +68,7 @@ export const useSearch = (): SearchHookReturn => {
     handleInputChange,
     handleSearchClick,
     handleKeyDown,
+    handleClearSearch,
 
     // Computed values
     isSearchDisabled: isSearching || !inputValue.trim() || isSameSearch
