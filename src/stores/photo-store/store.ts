@@ -11,6 +11,9 @@ import type {
 import { pexelsApi } from '@/api/services/pexels'
 
 interface PhotoState {
+  loading: boolean
+  error: string | null
+
   photos: Photo[]
   selectedPhoto: Photo | null
   singlePhoto: Photo | null
