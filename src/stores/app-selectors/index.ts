@@ -1,3 +1,3 @@
-export { useAppVisibleSetsInfo } from './use-visible-sets-info'
+export { usePhotosVisibleSetsInfo } from './use-photos-visible-sets-info'
 export { usePhotosData } from './use-photos-data'
-export { useLoadMoreData } from './use-load-more-data'
+export { usePhotosLoadMoreData } from './use-photos-load-more-data'

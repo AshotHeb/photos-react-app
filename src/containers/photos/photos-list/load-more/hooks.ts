@@ -1,8 +1,8 @@
 import { useCallback, useRef, useEffect } from 'react'
-import { useLoadMoreData } from '@/stores/app-selectors'
+import { usePhotosLoadMoreData } from '@/stores/app-selectors'
 
 export const useLoadMore = () => {
-  const { fetchPhotos, hasMore, photos } = useLoadMoreData()
+  const { fetchPhotos, hasMore, photos } = usePhotosLoadMoreData()
 
   const fetchPhotosRef = useRef(fetchPhotos)
   const isLoadingRef = useRef(false)

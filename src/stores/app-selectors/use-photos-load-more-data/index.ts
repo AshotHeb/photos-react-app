@@ -9,7 +9,7 @@ import {
   useLoadMoreSearchResults
 } from '@/stores'
 
-export const useLoadMoreData = () => {
+export const usePhotosLoadMoreData = () => {
   const hasSearchQuery = !!useSearchQuery()
 
   // All Photos

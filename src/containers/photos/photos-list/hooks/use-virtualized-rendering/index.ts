@@ -4,14 +4,14 @@ import type {
   UseVirtualizedRenderingProps,
   UseVirtualizedRenderingReturn
 } from './types'
-import { useAppVisibleSetsInfo } from '@/stores/app-selectors'
+import { usePhotosVisibleSetsInfo } from '@/stores/app-selectors'
 
 export const useVirtualizedRendering = ({
   layouts,
   totalHeight,
   bufferSets = 1
 }: UseVirtualizedRenderingProps): UseVirtualizedRenderingReturn => {
-  const { visibleSetsInfo, setVisibleSetsInfo } = useAppVisibleSetsInfo()
+  const { visibleSetsInfo, setVisibleSetsInfo } = usePhotosVisibleSetsInfo()
 
   const rafRef = useRef<number | undefined>(undefined)
 
