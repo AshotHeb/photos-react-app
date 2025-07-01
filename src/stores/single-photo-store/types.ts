@@ -4,6 +4,7 @@ export interface SinglePhotoState {
   photo: Photo | null
   loading: boolean
   error: string | null
+  cache: Map<number, Photo>
 }
 
 export interface SinglePhotoActions {
@@ -13,6 +14,9 @@ export interface SinglePhotoActions {
   clearError: () => void
   reset: () => void
   fetchPhoto: (id: number) => Promise<void>
+  addToCache: (photo: Photo) => void
+  getFromCache: (id: number) => Photo | null
+  clearCache: () => void
 }
 
 export type SinglePhotoStore = SinglePhotoState & SinglePhotoActions
