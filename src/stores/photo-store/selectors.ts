@@ -24,21 +24,6 @@ export const usePhotoSearchQuery = () =>
   usePhotoStoreBase((state) => state.searchQuery)
 export const usePhotoPerPage = () => usePhotoStoreBase((state) => state.perPage)
 
-// Single photo selectors
-export const useSinglePhoto = () =>
-  usePhotoStoreBase((state) => state.singlePhoto)
-export const useSinglePhotoLoading = () =>
-  usePhotoStoreBase((state) => state.singlePhotoLoading)
-export const useSinglePhotoError = () =>
-  usePhotoStoreBase((state) => state.singlePhotoError)
-export const useSinglePhotoActions = () =>
-  usePhotoStoreBase((state) => ({
-    setSinglePhoto: state.setSinglePhoto,
-    setSinglePhotoLoading: state.setSinglePhotoLoading,
-    setSinglePhotoError: state.setSinglePhotoError,
-    fetchSinglePhoto: state.fetchSinglePhoto
-  }))
-
 export const usePhotoPagination = () =>
   usePhotoStoreBase((state) => ({
     currentPage: state.currentPage,

@@ -3,23 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   useSinglePhoto,
   useSinglePhotoLoading,
-  useSinglePhotoError
-} from '@/stores/photo-store/selectors'
-import { usePhotoStore } from '@/stores/photo-store/store'
+  useSinglePhotoError,
+  useSinglePhotoStore
+} from '@/stores/single-photo-store'
 
 export const usePhotoData = () => {
   const { id } = useParams<{ id: string }>()
   const photo = useSinglePhoto()
   const loading = useSinglePhotoLoading()
   const error = useSinglePhotoError()
-  const store = usePhotoStore()
-  const fetchSinglePhotoRef = useRef(store.fetchSinglePhoto)
+  const store = useSinglePhotoStore()
+  const fetchPhotoRef = useRef(store.fetchPhoto)
   const lastFetchedId = useRef<string | null>(null)
 
   // Update ref when store changes
   useEffect(() => {
-    fetchSinglePhotoRef.current = store.fetchSinglePhoto
-  }, [store.fetchSinglePhoto])
+    fetchPhotoRef.current = store.fetchPhoto
+  }, [store.fetchPhoto])
 
   useEffect(() => {
     if (!id || lastFetchedId.current === id) {
@@ -27,7 +27,7 @@ export const usePhotoData = () => {
     }
 
     lastFetchedId.current = id
-    fetchSinglePhotoRef.current(parseInt(id))
+    fetchPhotoRef.current(parseInt(id))
   }, [id])
 
   return {
