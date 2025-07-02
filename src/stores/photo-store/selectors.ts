@@ -1,8 +1,8 @@
 import { usePhotoStore as usePhotoStoreBase } from './store'
 
 // Stable default values to prevent infinite loops
-const EMPTY_LAYOUTS = {}
-const DEFAULT_VISIBLE_SETS_INFO = {
+export const EMPTY_LAYOUTS = {}
+export const DEFAULT_VISIBLE_SETS_INFO = {
   visibleSets: [],
   currentSetIndex: 0,
   totalSets: 0,
@@ -20,20 +20,13 @@ export const usePhotoCurrentPage = () =>
 export const usePhotoHasMore = () => usePhotoStoreBase((state) => state.hasMore)
 export const usePhotoTotalResults = () =>
   usePhotoStoreBase((state) => state.totalResults)
-export const usePhotoSearchQuery = () =>
-  usePhotoStoreBase((state) => state.searchQuery)
+
 export const usePhotoPerPage = () => usePhotoStoreBase((state) => state.perPage)
 
 export const usePhotoPagination = () =>
   usePhotoStoreBase((state) => ({
     currentPage: state.currentPage,
     hasMore: state.hasMore,
-    totalResults: state.totalResults
-  }))
-
-export const usePhotoSearch = () =>
-  usePhotoStoreBase((state) => ({
-    searchQuery: state.searchQuery,
     totalResults: state.totalResults
   }))
 
@@ -73,11 +66,6 @@ export const usePhotoSetTotalResults = () =>
 export const usePhotoIncrementPage = () =>
   usePhotoStoreBase((state) => state.incrementPage)
 
-export const usePhotoSetSearchQuery = () =>
-  usePhotoStoreBase((state) => state.setSearchQuery)
-export const usePhotoClearSearch = () =>
-  usePhotoStoreBase((state) => state.clearSearch)
-
 export const usePhotoSetResponse = () =>
   usePhotoStoreBase((state) => state.setPhotoResponse)
 
@@ -102,12 +90,6 @@ export const usePhotoPaginationActions = () =>
     incrementPage: state.incrementPage
   }))
 
-export const usePhotoSearchActions = () =>
-  usePhotoStoreBase((state) => ({
-    setSearchQuery: state.setSearchQuery,
-    clearSearch: state.clearSearch
-  }))
-
 export const usePhotoStore = () => {
   const loading = usePhotoLoading()
   const error = usePhotoError()
@@ -115,7 +97,6 @@ export const usePhotoStore = () => {
   const currentPage = usePhotoCurrentPage()
   const hasMore = usePhotoHasMore()
   const totalResults = usePhotoTotalResults()
-  const searchQuery = usePhotoSearchQuery()
   const actions = usePhotoStoreActions()
 
   return {
@@ -125,7 +106,6 @@ export const usePhotoStore = () => {
     currentPage,
     hasMore,
     totalResults,
-    searchQuery,
     ...actions
   }
 }

@@ -19,9 +19,17 @@ export const SearchContainer = styled.div`
   margin: 0 auto;
 `
 
-export const SearchInput = styled.input`
+export const SearchInputWrapper = styled.div`
+  position: relative;
   flex: 1;
+  display: flex;
+  align-items: center;
+`
+
+export const SearchInput = styled.input`
+  width: 100%;
   padding: 1rem 1.5rem;
+  padding-right: 3rem; /* Make room for spinner */
   border: 2px solid #e1e5e9;
   border-radius: 12px;
   font-size: 1rem;
@@ -37,25 +45,19 @@ export const SearchInput = styled.input`
   &::placeholder {
     color: #9ca3af;
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `
 
-export const SearchButton = styled.button`
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
+export const SearchSpinner = styled.div`
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

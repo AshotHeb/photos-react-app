@@ -20,7 +20,6 @@ interface PhotoState {
   hasMore: boolean
   totalResults: number
 
-  searchQuery: string
   perPage: number
 
   // Layout state
@@ -38,7 +37,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
       currentPage: 1,
       hasMore: false,
       totalResults: 0,
-      searchQuery: '',
       perPage: 20,
 
       // Layout state
@@ -56,7 +54,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
           currentPage: 1,
           hasMore: false,
           totalResults: 0,
-          searchQuery: '',
           perPage: 20,
           layoutData: null
         }),
@@ -77,10 +74,6 @@ export const usePhotoStore = create<Store<PhotoState>>()(
         const { currentPage } = get()
         set({ currentPage: currentPage + 1 })
       },
-
-      // Search actions
-      setSearchQuery: (query: string) => set({ searchQuery: query }),
-      clearSearch: () => set({ searchQuery: '', currentPage: 1 }),
 
       // API response handling
       setPhotoResponse: (response: PhotoResponse) => {

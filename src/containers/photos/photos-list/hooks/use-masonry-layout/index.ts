@@ -2,38 +2,30 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import type { PhotoSetMap, Photo } from '../../types'
 import { useWorker } from '../use-worker'
 import { useVirtualizedRendering } from '../use-virtualized-rendering'
-import {
-  useLayouts,
-  useTotalHeight,
-  useContainerWidth,
-  useSetLayouts,
-  useSetTotalHeight,
-  useSetContainerWidth,
-  useSetVisibleSetsInfo
-} from '@/stores'
+
 import isEqual from 'lodash.isequal'
-import { usePhotoPhotos } from '@/stores'
+
 import { useDebounce } from '@/hooks/use-debounce'
 import type { UseMasonryLayoutProps, UseMasonryLayoutReturn } from './types'
+import { usePhotosData } from '@/stores/app-selectors/use-photos-data'
 
 export const useMasonryLayout = ({
   gap = 20,
   debounceDelay = 150
 }: UseMasonryLayoutProps): UseMasonryLayoutReturn => {
-  const photos = usePhotoPhotos()
   const containerRef = useRef<HTMLDivElement>(null)
   const [isCalculating, setIsCalculating] = useState(false)
 
-  // Get layout data from store using separate selectors
-  const layouts = useLayouts()
-  const totalHeight = useTotalHeight()
-  const containerWidth = useContainerWidth()
-
-  // Get separate layout actions
-  const setLayouts = useSetLayouts()
-  const setTotalHeight = useSetTotalHeight()
-  const setContainerWidth = useSetContainerWidth()
-  const setVisibleSetsInfo = useSetVisibleSetsInfo()
+  const {
+    photos,
+    layouts,
+    totalHeight,
+    containerWidth,
+    setLayouts,
+    setTotalHeight,
+    setContainerWidth,
+    setVisibleSetsInfo
+  } = usePhotosData()
 
   // Track previous state for optimization
   const previousPhotosRef = useRef<Photo[]>([])
