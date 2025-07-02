@@ -11,11 +11,11 @@ import type { SearchHookReturn } from './types'
 const SEARCH_DEBOUNCE_DELAY = 500 // 500ms delay
 
 export const useSearch = (): SearchHookReturn => {
-  const [inputValue, setInputValue] = useState('')
+  const storeQuery = useSearchQuery()
+  const [inputValue, setInputValue] = useState(storeQuery)
   const isSearching = useIsSearching()
   const searchPhotos = useSearchPhotos()
   const clearSearchQuery = useClearSearchQuery()
-  const storeQuery = useSearchQuery()
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Debounce the input value for search
@@ -24,7 +24,7 @@ export const useSearch = (): SearchHookReturn => {
     SEARCH_DEBOUNCE_DELAY
   )
 
-  // Sync input value with store query when component mounts or store query changes
+  // Sync input value with store query when store query changes
   useEffect(() => {
     setInputValue(storeQuery)
   }, [storeQuery])
@@ -41,11 +41,6 @@ export const useSearch = (): SearchHookReturn => {
   }, [debouncedInputValue, storeQuery, searchPhotos, clearSearchQuery])
 
   // Keep focus on input after search completes
-  useEffect(() => {
-    if (!isSearching && inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [isSearching])
 
   // Handle input change
   const handleInputChange = useCallback(
