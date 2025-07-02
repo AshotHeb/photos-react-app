@@ -43,8 +43,15 @@ A modern, responsive photo gallery application built with React, TypeScript, and
    The application will be available at `http://localhost:5173` (or the port shown in your terminal)
 
 5. **Build for Production**
+
    ```bash
    npm run build
+
+   **⚠️ Important Note**: The built project uses client-side routing. This means:
+   - ✅ Navigation within the app works perfectly
+   - ❌ Direct URL access or page refresh on routes like `/photos` or `/photos/123` will show a 404 error
+   - 🔧 **Solution**: Configure your server to serve `index.html` for all routes (see deployment section below)
+
    ```
 
 ## 📦 Packages & Technologies
@@ -102,6 +109,8 @@ A modern, responsive photo gallery application built with React, TypeScript, and
 ### Overview
 
 The virtualized grid system optimizes performance by rendering only the photos that are currently visible in the viewport, plus a small buffer. This allows handling thousands of photos without performance issues.
+
+**Cursor AI** -- Used during development
 
 ### How It Works
 
