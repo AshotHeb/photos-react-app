@@ -42,6 +42,13 @@ export interface Photo {
   height: number
   src: {
     medium: string
+    original: string
+    large2x: string
+    large: string
+    small: string
+    portrait: string
+    landscape: string
+    tiny: string
   }
   alt: string
 }

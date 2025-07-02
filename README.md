@@ -398,12 +398,12 @@ The selectors make the code cleaner and easier to understand by hiding the compl
 
 #### **Right Image Size**
 
-We pick the middle size (`photo.src.medium`) because it's just right:
+We pick the middle size (`photo.src.large`) because it's just right:
 
 | Size       | How Big | How Good | Should We Use? |
 | ---------- | ------- | -------- | -------------- |
-| **Large**  | 43KB    | Perfect  | Too heavy      |
-| **Medium** | 14-17KB | Good     | ✅ Yes!        |
+| **Large**  | 43KB    | Perfect  | ✅ Yes!        |
+| **Medium** | 14-17KB | Good     | Too blurry     |
 | **Small**  | 3KB     | Bad      | Too blurry     |
 
 **Why Medium?**

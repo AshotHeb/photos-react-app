@@ -68,7 +68,7 @@ export const calculatePhotoLayout = (
     width: itemWidth,
     photo: {
       id: photo.id,
-      src: photo.src.medium,
+      src: photo.src.large,
       alt: photo.alt,
       aspectRatio
     }
