@@ -467,3 +467,7 @@ We pick the middle size (`photo.src.medium`) because it's just right:
 - **Less Data**: Uses less internet
 - **Works on Slow Connections**: Even on mobile data
 - **Better User Experience**: Everything feels snappy
+
+## 🚨 Error Handling
+
+The app has comprehensive error handling with Error Boundaries wrapping the whole application to catch React component crashes, and a robust API error handling mechanism with proper error states, retry mechanisms, and user-friendly error messages.
