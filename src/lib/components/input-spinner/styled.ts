@@ -12,10 +12,10 @@ export const SpinnerContainer = styled.div`
 `
 
 export const SmallSpinnerIcon = styled.div`
-  width: 12px;
-  height: 12px;
-  border: 1.5px solid rgba(102, 126, 234, 0.3);
-  border-top: 1.5px solid #667eea;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(102, 126, 234, 0.3);
+  border-top: 2px solid #667eea;
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
 `
