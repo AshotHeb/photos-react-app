@@ -8,7 +8,7 @@ import {
 } from '@/stores/search-photos-store'
 import type { SearchHookReturn } from './types'
 
-const SEARCH_DEBOUNCE_DELAY = 500 // 500ms delay
+const SEARCH_DEBOUNCE_DELAY = 700 // 700ms delay
 
 export const useSearch = (): SearchHookReturn => {
   const storeQuery = useSearchQuery()
