@@ -38,12 +38,16 @@ export const PhotoItemWrapper = styled.div`
   }
 `
 
-export const PhotoImage = styled.img<{ $aspectRatio: number }>`
+export const PhotoImage = styled.img<{
+  $aspectRatio: number
+  $isLoaded: boolean
+}>`
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: ${({ $isLoaded }) => ($isLoaded ? 1 : 0)};
 
   ${PhotoItemWrapper}:hover & {
     transform: scale(1.05);

@@ -26,4 +26,5 @@ export const SkeletonContainer = styled.div<SkeletonContainerProps>`
   background-size: 200px 100%;
   animation: ${shimmer} 1.5s infinite;
   display: block;
+  border: 1px solid #d0d0d0;
 `
