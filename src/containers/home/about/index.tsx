@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import * as Styled from './styled'
 import { AboutCard } from './card'
 import type { AboutSectionProps } from './types'
@@ -6,10 +7,6 @@ import { HOME_ABOUT_CARDS, HOME_ABOUT_FEATURES } from './data'
 
 export const AboutSection: React.FC<AboutSectionProps> = React.memo(
   ({ className }) => {
-    const handleExploreClick = () => {
-      window.location.href = '/photos'
-    }
-
     return (
       <Styled.AboutSection className={className}>
         <Styled.AboutContainer>
@@ -59,7 +56,7 @@ export const AboutSection: React.FC<AboutSectionProps> = React.memo(
               Start your journey through thousands of beautiful photos and
               discover your next inspiration.
             </Styled.CTADescription>
-            <Styled.CTAButton onClick={handleExploreClick}>
+            <Styled.CTAButton as={Link} to="/photos">
               Explore Photos
             </Styled.CTAButton>
           </Styled.AboutCTA>

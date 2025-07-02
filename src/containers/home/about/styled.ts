@@ -187,6 +187,7 @@ export const CTAButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  text-decoration: none;
 
   &:hover {
     transform: translateY(-2px);
