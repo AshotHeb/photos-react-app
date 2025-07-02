@@ -8,6 +8,7 @@ import isEqual from 'lodash.isequal'
 import { useDebounce } from '@/hooks/use-debounce'
 import type { UseMasonryLayoutProps, UseMasonryLayoutReturn } from './types'
 import { usePhotosData } from '@/stores/app-selectors/use-photos-data'
+import { useWindowHeight } from '@/hooks/use-window-height'
 
 export const useMasonryLayout = ({
   gap = 20,
@@ -15,6 +16,7 @@ export const useMasonryLayout = ({
 }: UseMasonryLayoutProps): UseMasonryLayoutReturn => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isCalculating, setIsCalculating] = useState(false)
+  const windowHeight = useWindowHeight()
 
   const {
     photos,
@@ -30,6 +32,7 @@ export const useMasonryLayout = ({
   const previousPhotosRef = useRef<Photo[]>([])
   const previousContainerWidthRef = useRef(0)
   const previousLayoutsRef = useRef<PhotoSetMap>({})
+  const previousWindowHeightRef = useRef(0)
 
   // Debounce width updates
   const debouncedWidth = useDebounce(containerWidth, debounceDelay)
@@ -47,6 +50,7 @@ export const useMasonryLayout = ({
     const previousPhotos = previousPhotosRef.current
     const previousWidth = previousContainerWidthRef.current
     const previousLayouts = previousLayoutsRef.current
+    const previousWindowHeight = previousWindowHeightRef.current
 
     return calculateLayout({
       photos,
@@ -54,9 +58,11 @@ export const useMasonryLayout = ({
       gap,
       existingLayouts: previousLayouts,
       previousPhotos,
-      previousWidth
+      previousWidth,
+      windowHeight,
+      previousWindowHeight
     })
-  }, [photos, debouncedWidth, gap, calculateLayout])
+  }, [photos, debouncedWidth, gap, calculateLayout, windowHeight])
 
   // Handle async layout calculation
   useEffect(() => {
@@ -82,6 +88,7 @@ export const useMasonryLayout = ({
 
         previousPhotosRef.current = photos
         previousContainerWidthRef.current = debouncedWidth
+        previousWindowHeightRef.current = windowHeight
       } catch (error) {
         console.error('Failed to calculate layout:', error)
       } finally {
@@ -102,6 +109,7 @@ export const useMasonryLayout = ({
     totalHeight,
     photos,
     debouncedWidth,
+    windowHeight,
     setLayouts,
     setTotalHeight
   ])

@@ -7,6 +7,8 @@ export interface WorkerParams {
   existingLayouts: PhotoSetMap
   previousPhotos: Photo[]
   previousWidth: number
+  windowHeight: number
+  previousWindowHeight: number
 }
 
 export interface WorkerResult {

@@ -7,7 +7,9 @@ self.onmessage = (event) => {
     gap,
     existingLayouts,
     previousPhotos,
-    previousWidth
+    previousWidth,
+    windowHeight,
+    previousWindowHeight
   } = event.data
 
   try {
@@ -17,7 +19,9 @@ self.onmessage = (event) => {
       gap,
       existingLayouts,
       previousPhotos,
-      previousWidth
+      previousWidth,
+      windowHeight,
+      previousWindowHeight
     )
 
     self.postMessage({ success: true, result })

@@ -120,9 +120,12 @@ The virtualized grid system optimizes performance by rendering only the photos t
 #### 1. **Photo Set Organization**
 
 ```typescript
-// Photos are organized into sets (groups of 20 photos each)
-const setKey = `set-${setIndex}` // e.g., "set-0", "set-1", "set-2"
+// Photos are organized into sets based on their vertical position and window height
+const setKey = `${Math.floor(top / windowHeight)}` // e.g., "0", "1", "2"
+// Each set contains photos that fall within one window height of vertical space
 ```
+
+````
 
 #### 2. **Viewport Calculation**
 
@@ -131,7 +134,7 @@ const setKey = `set-${setIndex}` // e.g., "set-0", "set-1", "set-2"
 const currentSetIndex = Math.floor(scrollTop / setHeight)
 const startSetIndex = Math.max(0, currentSetIndex - bufferSets)
 const endSetIndex = Math.min(totalSets - 1, currentSetIndex + bufferSets)
-```
+````
 
 #### 3. **Visible Set Detection**
 

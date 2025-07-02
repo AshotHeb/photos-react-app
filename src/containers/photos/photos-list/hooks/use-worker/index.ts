@@ -38,7 +38,8 @@ export const useWorker = (): UseWorkerReturn => {
             params.gap,
             params.existingLayouts,
             params.previousPhotos,
-            params.previousWidth
+            params.previousWidth,
+            params.windowHeight
           )
         })
       }

@@ -5,6 +5,7 @@ import type {
   UseVirtualizedRenderingReturn
 } from './types'
 import { usePhotosVisibleSetsInfo } from '@/stores/app-selectors'
+import { useWindowHeight } from '@/hooks/use-window-height'
 
 export const useVirtualizedRendering = ({
   layouts,
@@ -12,6 +13,7 @@ export const useVirtualizedRendering = ({
   bufferSets = 1
 }: UseVirtualizedRenderingProps): UseVirtualizedRenderingReturn => {
   const { visibleSetsInfo, setVisibleSetsInfo } = usePhotosVisibleSetsInfo()
+  const windowHeight = useWindowHeight()
 
   const rafRef = useRef<number | undefined>(undefined)
 
@@ -82,9 +84,9 @@ export const useVirtualizedRendering = ({
     })
   }, [totalHeight, layouts, calculateVisibleSets, setVisibleSetsInfo])
 
-  // Update viewport state when layouts change
+  // Update viewport state when layouts change or window height changes
   useEffect(() => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const scrollTop = window.scrollY || document.documentElement.scrollTop
     const containerHeight = totalHeight
 
     const newVisibleSetsInfo = calculateVisibleSets(
@@ -94,7 +96,13 @@ export const useVirtualizedRendering = ({
     )
 
     setVisibleSetsInfo(newVisibleSetsInfo)
-  }, [layouts, totalHeight, calculateVisibleSets, setVisibleSetsInfo])
+  }, [
+    layouts,
+    totalHeight,
+    windowHeight,
+    calculateVisibleSets,
+    setVisibleSetsInfo
+  ])
 
   // Add scroll event listener
   useEffect(() => {

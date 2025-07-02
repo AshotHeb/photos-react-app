@@ -32,9 +32,16 @@ export const canReuseExistingLayouts = (
   previousPhotos: Photo[],
   currentPhotos: Photo[],
   previousWidth: number,
-  currentWidth: number
+  currentWidth: number,
+  previousWindowHeight: number = 0,
+  currentWindowHeight: number = 0
 ): boolean => {
+  // Force recalculation if window height changed since sets are based on window height
+  const windowHeightChanged =
+    previousWindowHeight !== 0 && previousWindowHeight !== currentWindowHeight
+
   return (
+    !windowHeightChanged &&
     previousPhotos.length > 0 &&
     previousWidth === currentWidth &&
     currentPhotos.length >= previousPhotos.length &&
@@ -88,7 +95,9 @@ export const calculateMasonryLayout = (
   gap: number,
   existingLayouts: PhotoSetMap = {},
   previousPhotos: Photo[] = [],
-  previousWidth: number = 0
+  previousWidth: number = 0,
+  windowHeight: number,
+  previousWindowHeight: number = 0
 ): { layouts: PhotoSetMap; totalHeight: number } => {
   if (photos.length === 0 || containerWidth === 0) {
     return { layouts: {}, totalHeight: 0 }
@@ -104,7 +113,9 @@ export const calculateMasonryLayout = (
     previousPhotos,
     photos,
     previousWidth,
-    containerWidth
+    containerWidth,
+    previousWindowHeight,
+    windowHeight
   )
 
   // Use existing layouts if possible
@@ -121,7 +132,6 @@ export const calculateMasonryLayout = (
   }
 
   // Calculate positions for photos (either all or just new ones)
-  const photosPerSet = gap
   const existingPhotosCount = Object.values(existingLayouts).flat().length
   const startIndex = canReuse ? existingPhotosCount : 0
 
@@ -135,9 +145,8 @@ export const calculateMasonryLayout = (
       columnHeights
     )
 
-    // Create sets of 20 photos each
-    const setIndex = Math.floor(i / photosPerSet)
-    const setKey = `set-${setIndex}`
+    const top = layout.top
+    const setKey = `set-${Math.floor(top / windowHeight)}`
 
     const resultLayouts = layouts[setKey] || []
     layouts[setKey] = [...resultLayouts, layout]
