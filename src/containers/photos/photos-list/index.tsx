@@ -65,7 +65,8 @@ export const PhotosList: React.FC<PhotosListProps> = React.memo(() => {
             const transform = `translate3d(${layout.left}px, ${layout.top}px, 0)`
             return (
               <PhotoItem
-                key={`photo-${layout.id}`}
+                // Pexels API has duplication in photos, for example I find some duplications in 7 and 8 pages, because of that we need to use top to avoid duplicates
+                key={`photo-${layout.id}-${layout.top}`}
                 id={layout.id}
                 src={layout.photo.src}
                 alt={layout.photo.alt}

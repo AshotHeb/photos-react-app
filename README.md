@@ -100,9 +100,12 @@ A modern, responsive photo gallery application built with React, TypeScript, and
 ### API Integration
 
 - **Fetch API** -- Native browser API for HTTP requests
+
   - Built-in browser support
   - Promise-based API
   - No additional dependencies
+
+    **⚠️ Important Note**: The Pexels API occasionally returns duplicate photos across different pages (e.g., pages 7 and 8). This is a limitation of the API itself, not our application. To handle this:
 
 ## 🎯 Virtualized Grid System
 
