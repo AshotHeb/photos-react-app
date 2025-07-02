@@ -23,8 +23,7 @@ export const useMasonryLayout = ({
     containerWidth,
     setLayouts,
     setTotalHeight,
-    setContainerWidth,
-    setVisibleSetsInfo
+    setContainerWidth
   } = usePhotosData()
 
   // Track previous state for optimization
@@ -104,8 +103,7 @@ export const useMasonryLayout = ({
     photos,
     debouncedWidth,
     setLayouts,
-    setTotalHeight,
-    setVisibleSetsInfo
+    setTotalHeight
   ])
 
   // Handle resize events
