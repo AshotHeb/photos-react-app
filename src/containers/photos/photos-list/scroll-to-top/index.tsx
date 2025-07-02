@@ -12,7 +12,7 @@ export const ScrollToTop: React.FC<ScrollToTopProps> = React.memo(
 
     // Check if scroll position exceeds threshold
     const toggleVisibility = useCallback(() => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
       setIsVisible(scrollTop > threshold)
     }, [threshold])
 
