@@ -474,3 +474,7 @@ We pick the middle size (`photo.src.large`) because it's just right:
 ## 🚨 Error Handling
 
 The app has comprehensive error handling with Error Boundaries wrapping the whole application to catch React component crashes, and a robust API error handling mechanism with proper error states, retry mechanisms, and user-friendly error messages.
+
+## 😅 Unit Testing
+
+Due to time constraints during development, comprehensive unit tests have not been implemented for this photo gallery application. While testing is an essential part of software development, the focus was prioritized on delivering core functionality and user experience features within the available timeframe.
