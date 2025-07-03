@@ -28,7 +28,7 @@ A modern, responsive photo gallery application built with React, TypeScript, and
 
    ```bash
    # Create environment file
-   cp .env.example .env
+   cp .env
 
    # Add your environment variables to .env file
    # Follow the structure provided in .env.example
